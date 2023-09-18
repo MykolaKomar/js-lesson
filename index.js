@@ -2229,3 +2229,305 @@
 // // -5
 // // -10
 // // -25
+
+// Урок 19
+// ВБУДОВАНІ МОЖЛИВОСТІ ДЛЯ ОБ'ЄКТІВ
+
+// КОПІЮВАННЯ ВЛАСТИВОСТЕЙ ОБ'ЄКТІВ
+// Це вбудована функція яка копією значення
+// всіх доступних властивостей переданих
+// об'єктів в один головний
+
+// Object.assing(target, sources1, sources1,  ...sourcesN )
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// articlePhoto = {
+//   photoUrl: "...url",
+//   photoId: 100,
+//   photoType: "big",
+// };
+
+// articleCommentList = {
+//   list: [
+//     {
+//       id: 4323,
+//       user: "Ivan",
+//       message: "Крутий контент",
+//     },
+//   ],
+// };
+
+// Object.assign(article, articlePhoto, articleCommentList);
+
+// console.log(article);
+// // Виведе:
+// // {
+// //   id: 105423,
+// //   title: 'My arcticle',
+// //   description: 'This is info about artile',
+// //   catrgoryId: 1423,
+// //   likeAmount: 442,
+// //   photoUrl: '...url',
+// //   photoId: 100,
+// //   photoType: 'big',
+// //   list: [ { id: 4323, user: 'Ivan', message: 'Крутий контент' } ]
+// // }
+
+// МАСИВ ВЛАСТИВОСТЕЙ
+// Це вбудована функція яка повертає масив з масивами,
+// які містять пари ключ-значення для кожної перерахованої
+// властивості об'єкта. Порядок властивостей у масиві
+// відповідає порядку перебору
+
+// Object.entries(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// articlePhoto = {
+//   photoUrl: "...url",
+//   photoId: 100,
+//   photoType: "big",
+// };
+
+// articleCommentList = {
+//   list: [
+//     {
+//       id: 4323,
+//       user: "Ivan",
+//       message: "Крутий контент",
+//     },
+//   ],
+// };
+
+// Object.assign(article, articlePhoto, articleCommentList);
+
+// console.log(Object.entries(article));
+// // Виведе:
+// // [
+// //   ["id", 105423],
+// //   ["title", "My arcticle"],
+// //   ["description", "This is info about artile"],
+// //   ["catrgoryId", 1423],
+// //   ["likeAmount", 442],
+// //   ["photoUrl", "...url"],
+// //   ["photoId", 100],
+// //   ["photoType", "big"],
+// //   ["list", [[Object]]],
+// // ];
+
+// ОБ'ЄКТ З МАСИВУ ВЛАСТИВОСТЕЙ
+// Це вбудована функція,яка створює об'єкт зі списку пар
+// ключ-значення. Він приймає масив, який складається з
+// масивів у форматі [ключ, значення] і повертає новий об'єкт
+// у форматі {ключ, значення}
+// Object.fromEntries
+
+// const objArr = [
+//   ["id", 100432],
+//   ["title", "My product name"],
+//   ["price", 1203],
+// ];
+
+// console.log(Object.fromEntries(objArr));
+// // Виведе { id: 100432, title: 'My product name', price: 1203 }
+
+// ПЕРЕВІРКА ЧИ ІСНУЄ ВЛАСТИВІСЬ ОБ'ЄКТА
+// Це вбудована функція, яка перевіря,чи має об'єкт власну
+// властивість з вказаним ім'ям
+// hasOwnProperty(prop)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// console.log(article.hasOwnProperty("id"));
+// // Виведе true
+
+// ПЕРЕВІРКА ВЛАСТИВОСТІ НА ПЕРЕРАХОВАНІСТЬ
+// Це вбудована функція, яка перевіряє, чи є
+// певна вдастивість перераховуваною в об'єкті за
+// допомогою циклу for ... in
+
+// .propertyIsEnumerable(prop)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// console.log(article.propertyIsEnumerable("id"));
+// // Виведе true
+
+// ЗАМОРОЗИТИ ОБ'ЄКТ
+// Це вбудована функція, яка заморожує об'єкт, що
+// перешкоджує зміні його властивостейю Заморожений об'єкт
+// не може бути змінений шляхом додавання, видалення
+// або зміни властивостей
+// Object.freeze(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.freeze(article);
+
+// article.title = "Hello";
+// console.log(article);
+// // Виведе не замінює  "My arcticle" на "Hello"
+
+// ПЕРЕВІРКА НА ЗАМОРОЗКУ ОБ'ЄКТА
+// Це вбудована функція, яка використовується для перевірки,
+// чи є об'єкт замороженим (неможливість змінити його властивість)
+// Object.isFrozen(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.freeze(article);
+
+// article.title = "Hello";
+// console.log(Object.isFrozen(article));
+// // Виведе true
+
+// ЗАБОРОНА РОЗШИРЕННЯ ОБ'ЄКТА
+// Вбудована функція, яка використовується для заборони
+// розширення об'єкта, тобто вона запобігає додаванню
+// нових властивостей до об'єкта
+// Object.preventExtensions(onj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.preventExtensions(article);
+
+// article.test = "123456";
+// console.log(article.test);
+// // Виведе undefined
+
+// ПЕРЕВІРКА НА ЗАБОРОНУ РОЗШИРЕННЯ ОБ'ЄКТА
+// Це вбудована функція, яка використовується
+// для перевірки, чи можна додавати нові властивості
+// до об'єкта
+// Object.isExtensible(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.preventExtensions(article);
+
+// article.test = "123456";
+// console.log(Object.isExtensible(article));
+// // Виведе false
+
+// ЗАПЕЧАТУВАННЯ ОБ'ЄКТА
+// Це вбудована функція. яка робить об'єкт доступним лише
+// для читання та редагування існуючих властивостей, а
+// додавати нові властивості чи видаляти існуючі неможна
+// Object.seal(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.seal(article);
+
+// delete article.id;
+// console.log(article.id);
+// // Виведе 105423
+
+// ПЕРЕВІРКА ЧИ ЗАПЕЧАТАНИЙ ОБ'ЄКТ
+// Це вбудована функція, яка перевіряє, чи
+// є об'єкт "запечатаним" (sealed), тобто чи дозволяє він тільки
+// читання властивостей, але не дозволяє додавання нових властивостей
+// або видалення існуючих
+// Object.isSealed(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// Object.seal(article);
+
+// delete article.id;
+// console.log(Object.isSealed(article));
+// // Виведе true
+
+// ОТРИМАННЯ КЛЮЧІВ ОБ'ЄКТА
+// Це вбудована функція, яка повертає масив з ключами доступних
+// властивостей об'єкта
+// Object.keys(obj)
+
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
+
+// console.log(Object.keys(article));
+
+// // Виведе [ 'id', 'title', 'description', 'catrgoryId', 'likeAmount' ]
+
+// ЗНАЧЕННЯ ОБ'ЄКТІВ
+// Це вбудована функція яка повертає масив значень доступних
+// властивостей об'єкта в тому ж порядку, у якому
+// вони з'являються в коді
+
+const article = {
+  id: 105423,
+  title: "My arcticle",
+  description: "This is info about artile",
+  catrgoryId: 1423,
+  likeAmount: 442,
+};
+
+console.log(Object.values(article));
+// Виведе [ 105423, 'My arcticle', 'This is info about artile', 1423, 442 ]
