@@ -1929,3 +1929,303 @@
 // console.log(arr1); //виведе arr1
 
 // console.log(arr1.some((elem, index, array) => elem <= 0)); //true хоч один елемент відповідає умові
+
+// Урок 18
+// ВБУДОВАНІ МОЖЛИВОСТІ ДЛЯ МИСИВІВ
+// 2 ЧАСТИНА
+
+// ПОШУК У МАСИВІ
+// Це вбудована функція яка знаходить перший елемент масиву
+// який задовольняє надану функцію тестування
+
+// .find(callbackFn, thisArg)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// let minAge = 30;
+
+// const userBigAge = userList.find(({ age }, index, array) => age >= minAge);
+
+// console.log(userBigAge); // Виведе { id: 54, name: 'Ivan', age: 35 }
+
+// ПОШУК ІНДЕКСУ В МАСИВІ
+// Це вбудована функція яка знаходить індекс
+// першого елементу масиву який задовольняє надану
+// функцію тестування
+
+// .findIndex(callbackFn, thisArg)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// let minAge = 30;
+
+// const userBigAge = userList.findIndex(({ age }, index, array) => age >= minAge);
+
+// console.log(userBigAge); // Виведе 1, а якщо елемент не найдено виведе -1
+
+// ПОШУК ОСТАННЬОГО ЕЛЕМЕНТУ МАСИВУ
+// Це вбудована функція яка знаходить останній елемент масиву,
+// Який задовольняє надану функцію тестування
+// .findLast(callbackFn, thisArg)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// let minAge = 30;
+
+// const userBigAge = userList.findLast(({ age }, index, array) => age >= minAge);
+
+// console.log(userBigAge); //   { id: 6412, name: "Anton", age: 41 },
+
+// ПОШУК ОСТАННЬОГО ІНДЕКСУ
+// Це вбудована функція яка знаходить індекс останнього елементу
+// масиву який задовольняє надану функцію тестування
+// .findLastIndexs(callbackFn, thisArg)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// let minAge = 30;
+
+// const userBigAge = userList.findLastIndex(
+//   ({ age }, index, array) => age >= minAge
+// );
+
+// console.log(userBigAge); // Виведе 2, а якщо елемент не найдено виведе -1
+
+// КЛЮЧІ МАСИВУ
+// Це вбудована функція яка повертає новий об'єкт ітератора,
+// який містить ключі для кожного індексу в масиві
+// .keys()
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// const iter = userList.keys();
+
+// for (const elem of iter) {
+//   console.log(elem); // Виведе 0, 1, 2 - тобто індекси масиву
+// }
+
+// ЗНАЧЕННЯ МАСИВУ
+// Це вбудована функція яка містить значення для кожного
+// індексу в масиві у впорядкованому порядку
+// .values()
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19 },
+//   { id: 54, name: "Ivan", age: 35 },
+//   { id: 6412, name: "Anton", age: 41 },
+// ];
+
+// const iter = userList.values();
+
+// for (const elem of iter) {
+//   console.log(elem);
+//   // Виведе { id: 1, name: 'Dima', age: 19 }
+//   // { id: 54, name: 'Ivan', age: 35 }
+//   // { id: 6412, name: 'Anton', age: 41 } , тобто значення масиву
+// }
+
+// ОБ'ЄДНАННЯ МАСИВУ
+// Це вбудована функція, яка використовується для
+// об'єднання всіх елементів масиву в один рядок. Він повертає
+// рядок утворений шляхом об'єднання елементів масиву за
+// допомогою розділювача
+// .join(separator)
+
+// const arr = ["Apple", "Hotdog", "Bread", "Milk"];
+
+// console.log(arr.join(", ")); // Виведе: Apple, Hotdog, Bread, Milk
+
+// ВИДАЛЕННЯ ТА ВСТАВКА ЕЛЕМЕНТІВ В МАСИВІ
+// Це вбудована функція яка видаляє, додає або замінює елементи
+// в масиві.Він може модифікувати початковий масив, зміщувати інші
+// елементи відповідно
+// .splice(start, deleteCount, item1, item2, itemN)
+
+// const arr = ["Apple", "Hotdog", "Bread", "Milk"];
+
+// const arrSmall = arr.splice(1, 2, "Tea", "Cheese");
+
+// console.log(arrSmall); // Виведе: [ 'Hotdog', 'Bread' ]
+
+// console.log(arr); // Виведе:[ 'Apple', 'Tea', 'Cheese', 'Milk' ]
+
+// КОПІЯ ЧАСТИНИ МАСИВУ
+// Це вбудована функція, яка створює новий масив,
+// що містить копію певної частини вихідного масиву
+// .slice(start, end)
+
+// const arr = ["Apple", "Hotdog", "Bread", "Milk"];
+
+// const arrSmall = arr.slice(1, 3);
+
+// console.log(arrSmall); // Виведе: [ 'Hotdog', 'Bread' ]
+
+// console.log(arr); // Виведе:[ 'Apple', 'Tea', 'Cheese', 'Milk' ]
+
+// ЗВЕДЕННЯ МАСИВУ
+// Це вбудована функція, яка використовується для обчислення
+// одного значення на підставі елементів масиву
+
+// Цей метод виконує ітерацію зліва на направо (з початку до кінця)
+// по кожному елементу масиву і обробляє їх за допомогою функції
+// зворотного виклику, накопичуючи результати в одне фінальне
+// значення, яке повертається на виході
+// reduce(callbackFn, initialValue)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19, balance: 300 },
+//   { id: 54, name: "Ivan", age: 35, balance: 0 },
+//   { id: 6412, name: "Anton", age: 41, balance: 10200 },
+// ];
+
+// const result = userList.reduce((num, user, userIndex, array) => {
+//   console.log(num, user.age);
+//   return user.age > num ? user.age : num;
+// }, 1);
+
+// const totalBalance = userList.reduce((num, user) => num + user.balance, 0);
+// console.log(totalBalance);
+
+// ЗВОРОТНЄ ЗВЕДЕННЯ МАСИВУ
+// Це вбудована функція, яка використовується для обчислення
+// одного значення на підставі елементів масиву
+
+// Цей метод виконує ітерацією зправа наліво (з кінця до початку)
+// по кожному елементу масиву і обробляє їх за допомогою функції
+// зворотного виклику, накопичуючи результати в одне фінальне значення
+// яке повертається на виході
+// reduceRight(callbackFn, initialValue)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19, balance: 300 },
+//   { id: 54, name: "Ivan", age: 35, balance: 0 },
+//   { id: 6412, name: "Anton", age: 41, balance: 10200 },
+// ];
+
+// const result = userList.reduceRight((num, user, userIndex, array) => {
+//   console.log(num, user.age);
+//   return user.age > num ? user.age : num;
+// }, 1);
+
+// НОВИЙ МАИСВ ДЛЯ КОЖНОГО ЕЛЕМЕНТУ
+// Це вбудована функція, яка створює новий масив, який містить
+// результати виконання функції зворотнього виклику(callback function)
+// для кожного елемента вихідного масиву
+// map(callbackFn, thisArg)
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19, balance: 300 },
+//   { id: 54, name: "Ivan", age: 35, balance: 0 },
+//   { id: 6412, name: "Anton", age: 41, balance: 10200 },
+// ];
+
+// const result = userList.map((user, index, array) => {
+//   return user.name;
+// });
+
+// console.log(result); // Виведе: [ 'Dima', 'Ivan', 'Anton' ]
+
+//...................///.............../////.///////////...../////
+
+// const userList = [
+//   { id: 1, name: "Dima", age: 19, balance: 300 },
+//   { id: 54, name: "Ivan", age: 35, balance: 0 },
+//   { id: 6412, name: "Anton", age: 41, balance: 10200 },
+// ];
+
+// const result = userList.map((user, index, array) => {
+//   user.balanceLimit = 1000 - user.balance;
+
+//   if (user.balanceLimit < 0) {
+//     user.balanceLimit = 0;
+//   }
+//   return user;
+// });
+
+// console.log(result);
+// // Виведе:
+// // [
+// //   { id: 1, name: 'Dima', age: 19, balance: 300, balanceLimit: 700 },
+// //   { id: 54, name: 'Ivan', age: 35, balance: 0, balanceLimit: 1000 },
+// //   { id: 6412, name: 'Anton', age: 41, balance: 10200, balanceLimit: 0 }
+// // ]
+
+// РОЗГОРТАННЯ ВКЛАДЕНИХ МАСИВІВ
+// Це вбудована функція яка використовується для вирівнбвання
+// (розгортання) вкладених підмасивів в однорідний масив
+// .flat(depth)
+
+// const flatArray = [
+//   [100, 200],
+//   [220, 230],
+//   [430, 455],
+// ];
+// console.log(flatArray.flat()); // Виведе: [ 100, 200, 220, 230, 430, 455 ]
+
+// НОВИЙ РОЗГОРНУТИЙ МАСИВ ДЛЯ КОЖНОГО ЕЛЕМЕНТУ
+// Це вбудована функція, яка дозволяє виконувати перетворення
+// на кожен елемент масиву та об'єднувати результат у новому масиві
+// flatMap(callbackFn, thisArg)
+
+// const flatArray = [
+//   [100, 200],
+//   [220, 230],
+//   [430, 455],
+// ];
+// console.log(flatArray.flatMap((el) => [...el, el[0] - el[1]]));
+// // Виведе:
+// // [
+// //   100, 200, -100,
+// //   220, 230,  -10,
+// //   430, 455,  -25
+// // ]
+
+// ПЕРЕБРАТИ МАСИВ
+// це вбудована функція яка використовується для виконання
+// заданої функції один раз для кожного елементу у масиві без
+// створення нового масиву
+// forEach(callbackFn, thisArg)
+
+// const flatArray = [
+//   [
+//     [100, 105],
+//     [200, 205],
+//   ],
+//   [
+//     [220, 230],
+//     [430, 455],
+//   ],
+// ];
+// const result = flatArray.flatMap((el) => {
+//   return el.map((it) => {
+//     return it[0] - it[1];
+//   });
+// });
+
+// result.forEach((elem, index, array) => {
+//   console.log(elem);
+// });
+// // Виведе:
+// // -5
+// // -5
+// // -10
+// // -25
