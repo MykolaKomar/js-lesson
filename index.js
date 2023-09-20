@@ -2521,13 +2521,219 @@
 // властивостей об'єкта в тому ж порядку, у якому
 // вони з'являються в коді
 
-const article = {
-  id: 105423,
-  title: "My arcticle",
-  description: "This is info about artile",
-  catrgoryId: 1423,
-  likeAmount: 442,
-};
+// const article = {
+//   id: 105423,
+//   title: "My arcticle",
+//   description: "This is info about artile",
+//   catrgoryId: 1423,
+//   likeAmount: 442,
+// };
 
-console.log(Object.values(article));
-// Виведе [ 105423, 'My arcticle', 'This is info about artile', 1423, 442 ]
+// console.log(Object.values(article));
+// // Виведе [ 105423, 'My arcticle', 'This is info about artile', 1423, 442 ]
+
+// Урок 20
+// Просунутий тип данних: МНОЖИНА
+
+// Множина -- це вбудований тип даних, який використовується
+// для зберігання унікальних значень будь-якого типу данних
+// які можуть зустрічатись лише один раз
+
+// -- Масиви надають упорядкований список елементів з
+//    можливістю дублювання, з доступом до елементів за
+//    допомогою індексів та вбудованиними функціями для
+//    маніпулювання клкмкнтами
+
+// -- Множина надає неупорядкований список унікальних
+//    елементів з можливістю додавання, видалення та
+//    перевірки наявності елементів
+
+//  Створення множини через конструктор
+// Для створення через конструктор потрібно
+// викликати сам конструктор, що створить пусту множину
+// new Set([значення1, ...значенняN])
+
+// Оператор "новий" (new) можна використовувати для того,
+// щоб створити нове значення типу даних через конструктор
+// new Коструктор()
+
+// const set = new Set(["123", "123", "123", 123, null]);
+// console.log(set);
+
+// // Виведе: Set(3) { '123', 123, null }
+
+// \\\\\\\\\\\\\\\\\\\\\\\
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+// console.log(userIdList);
+
+// // Виведе: Set(5) { 40250, 789052, 55, 123, null }
+
+// Ключове слово "для" (for) можна використовувати з
+// множиною для ітерації (перебору) значень множини
+// for (const значення of множина) {...}
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// for (const value of userIdList) {
+//   console.log(value);
+// }
+// // Виведе:
+// // 40250
+// // 789052
+// // 55
+// // 123
+// // null
+
+// Функція для кожного елементу
+// Це вбудована функція, яка використовується
+// для виконання заданої функції один раз для кожного
+// елемента у об'єкта Set
+// forEach(callbackFn, thisArg)
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// userIdList.forEach((value, value2, set) => console.log(value));
+// // Виведе:
+// // 40250
+// // 789052
+// // 55
+// // 123
+// // null
+
+// Розмір множини
+// Це вбудована властивість яка повертає кількість
+// унікадьних клкментів множині
+// .size
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// console.log(userIdList.size); //  Виведе: 5
+
+// Додавання елементу до множини
+// Це вбудована функція яка додає новий елемент
+// add(value)
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// userIdList.add(40133)
+
+// console.log(userIdList); //  Виведе: Set(6) { 40250, 789052, 55, 123, null, 40133 }
+// console.log(userIdList.size); //  Виведе: 6
+
+// Видалення елементів з множини
+// Це вбудована функція яка видаляє елемент
+// delete(value)
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// userIdList.delete(40133);
+
+// console.log(userIdList); //  Виведе: Set(5) { 40250, 789052, 55, 123, null }
+// console.log(userIdList.size); //  Виведе: 5
+
+// Перевірка наявності значення
+// Це вбудована функція, яка перевіряє наявність елемента
+// .has(value)
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// const has = userIdList.has(40133);
+
+// console.log(userIdList); //  Виведе: Set(5) { 40250, 789052, 55, 123, null }
+// console.log(userIdList.size); //  Виведе: 5
+// console.log(has); //  false
+
+// Видалення всіх елементів
+// Це вбудована функція, яка видаляє всі елементи
+// .clear()
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// userIdList.clear();
+
+// console.log(userIdList); //  Виведе: Set(0) {}
+// console.log(userIdList.size); //  Виведе: 0
+
+// Ключі кожного елементу
+// Це вбудована функція яка повертає спеціальний об'єкт-
+// ітератор, що містить ключі для кожного елемента в множині
+// у порядку їх встановлення
+// .keys()
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// const key = userIdList.keys();
+// console.log(key); //  Виведе: [Set Iterator] { 40250, 789052, 55, 123, null }
+
+// Значення кожного елементу
+// Це вбудована функція, яка повертає спеціальний об'єкт-
+// ітератор, який містить значення унікальних елементів
+// в множині в порядку їх встановлення
+// values()
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// const value = userIdList.values();
+// console.log(value); //  Виведе: [Set Iterator] { 40250, 789052, 55, 123, null }
+
+// Перетворення в інший тип даних
+// Це вбудована функція, яка перетворює значення множини
+// в спеціальний об'єкт-ітератор, який можна використовувати
+// для створення інших типів даних
+// .entries()
+
+// const userIdList = new Set([40250, 789052, 55, 123, null]);
+
+// const entrie = userIdList.entries();
+// console.log(entrie);
+// //  Виведе: [Set Entries] {
+// //   [ 40250, 40250 ],
+// //   [ 789052, 789052 ],
+// //   [ 55, 55 ],
+// //   [ 123, 123 ],
+// //   [ null, null ]
+// // }
+
+// ПРИКЛАДИ РОБОТИ МНОЖИНИ
+// №1
+
+// const arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+// const set = new Set(arr);
+
+// const arr2 = [...set];
+
+// console.log(arr2);
+
+// №2
+
+// const categoryList = new Set();
+
+// function addCategory(category) {
+//   if (categoryList.has(category)) {
+//     console.log("Ця категорія вже є");
+
+//     return false;
+//   }
+
+//   categoryList.add(category);
+//   return true;
+// }
+
+// console.log(addCategory("Спорт")); // Виведе:true
+// console.log(addCategory("Спорт")); // Виведе: Ця категорія вже є  false
+
+// console.log(addCategory("Їжа")); // Виведе:true
+
+// №2
+
+// const students = [
+//   { id: 1, name: "John", course: "Math" },
+//   { id: 2, name: "Jane", course: "Science" },
+//   { id: 3, name: "Adam", course: "Math" },
+//   { id: 4, name: "Eve", course: "English" },
+//   { id: 5, name: "Kate", course: "Science" },
+// ];
+
+// const courseList = new Set(students.map((student) => student.course));
+// console.log(Array.from(courseList)); // Виведе:[ 'Math', 'Science', 'English' ]
