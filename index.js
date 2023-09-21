@@ -2737,3 +2737,284 @@
 
 // const courseList = new Set(students.map((student) => student.course));
 // console.log(Array.from(courseList)); // Виведе:[ 'Math', 'Science', 'English' ]
+
+// Урок 21
+// Просунутий тип даних: СЛОВНИК
+// Словник -- це вбудований тип даних, який
+// використовується для зберігання значень будь-якого типу,
+// даних у колекцію в форматі "ключ:значення"
+
+// ** Об'єкт використовується для представлення структури даних
+//    з властивостями, методами та вкладеними об'єктами
+
+// ** Словник використовується, коли необхідно зберігати пари
+//    ключ-значення та забезпечувати ефективний доступ до
+//    даних з ключем
+
+// Створення словника через конструктор
+// Для створення через конструктор потрібно викликати сам
+// конструктор, що може створити пустий мловник
+
+// new Map([ ['ключ','значення'] ])
+
+// const dictionari = new Map();
+// console.log(dictionari); // Виведе: Map(0) {}
+
+// // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+// console.log(button); // Виведе: Map(2) { 'color' => 'red', 'size' => '32px' }
+
+// // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// const obj = {
+//   color: "red",
+//   size: 32 + "px",
+// };
+
+// const button2 = new Map(Object.entries(obj));
+// console.log(button2); // Виведе: Map(2) { 'color' => 'red', 'size' => '32px' }
+
+// // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// const set = new Set(["red", "32px"]);
+
+// const button3 = new Map(set.entries());
+// console.log(button3); // Виведе: Map(2) { 'red' => 'red', '32px' => '32px' }
+
+// // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// const set2 = new Set(button);
+
+// console.log(set2); // Виведе: Set(2) { [ 'color', 'red' ], [ 'size', '32px' ] }
+
+// Ключі кожного елементу
+// Це вбудована функція, яка повертає спеціальний об'єкт-ітератор,
+// що містить ключі для кожного елемента в словнику у порядку їх встановелення
+// .keys()
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// const set2 = new Set(button.keys());
+
+// console.log(set2); // Виведе: Set(2) { 'color', 'size' }
+
+// Значення кожного елементу
+// Це вбудована функція, яка повертає спеціальний об'єкт-
+// ітератор, який містить значення унікальних елементів
+// у словнику в порядку їх встановлення
+// .values()
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// const set2 = new Set(button.values());
+
+// console.log(set2); // Виведе: Set(2) { 'red', '32px' }
+
+// Ключове слово "для" зі словником
+// Ключове слово  "для" (for) можна використовувати зі словником
+// для ітерації (перебору) значень словника
+
+// for(const [ключ, значення] of словник) {...}
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// for (const [key, velue] of button) {
+//   console.log(key, velue);
+//   // Виведе:
+//   //color red
+//   //size 32px
+// }
+
+// Функція для кожного елементу
+// Це вбудована функція, яка використовується для виконання
+// заданої функції один раз для кожного елементу словника
+// у порядку вставки
+// forEach(callbackFn, thisArg)
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.forEach((value, key, map) => console.log(value, key, map));
+// // Виведе:
+// // red color Map(2) { 'color' => 'red', 'size' => '32px' }
+// // 32px size Map(2) { 'color' => 'red', 'size' => '32px' }
+
+// Розмір словника
+// Це вбудована властивість, яка повертає кількість унікальних
+// елементів у словнику
+// .size
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// console.log(button.size); // Виведе: 2
+
+// Додавання елементу до словника
+// Це вбудована функція, яка додає новий елемент
+// .set(key, value)
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.set("weight", 600);
+
+// console.log(button); // Виведе: Map(3) { 'color' => 'red', 'size' => '32px', 'weight' => 600 }
+
+// Отримання клкмента зі словника
+// Це вбудована функція. яка повертає значення елемента
+// словника за його ключем
+//  .get(key)
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.set("weight", 600);
+
+// console.log(button.get("weight")); // Виведе: 600
+
+// Видалення елемента зі словника
+// Це вбудована функція, яка видаляє елемент
+// .delete(key)
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.set("weight", 600);
+
+// console.log(button.delete("weight")); // Виведе: true
+
+// Перевірка наявності значення
+// Це вбудована функція, яка перевіряє наявність елемента
+// .has(key)
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.set("weight", 600);
+
+// console.log(button.has("weight")); // Виведе: true
+
+// Видалення всіх елементів
+// Це вбудована функція, яка видаляє всі елементи
+// .clear()
+
+// const button = new Map([
+//   ["color", "red"],
+//   ["size", "32px"],
+// ]);
+
+// button.set("weight", 600);
+
+// button.clear();
+// console.log(button); // Виведе: Map(0) {}
+
+// Приклади використання СЛОВНИКА
+// №1
+
+// const LANG_LIST = {
+//   UA: "uk-UA",
+//   EA: "ea-US",
+// };
+
+// const activeLang = LANG_LIST.EU;
+
+// const product = {
+//   price: 100,
+//   amount: 3,
+
+//   info: new Map([
+//     [
+//       LANG_LIST.UA,
+//       {
+//         title: "Заголовок",
+//         info: "Інформація",
+//       },
+//     ],
+//     [
+//       LANG_LIST.EU,
+//       {
+//         title: "Title",
+//         info: "info",
+//       },
+//     ],
+//   ]),
+// };
+
+// const info = product.info.get(activeLang);
+
+// console.log(info); // Виведе: { title: 'Title', info: 'info' }
+
+// console.log(product.info.has(activeLang)); // Виведе: true
+
+// *************************************************//
+
+// №2
+
+// const user1 = {
+//   id: 1323,
+//   name: "Ivan",
+// };
+
+// const user2 = {
+//   id: 4231,
+//   name: "Anton",
+// };
+
+// const product1 = {
+//   id: 5314,
+//   title: "Mobile Phone",
+// };
+
+// const product2 = {
+//   id: 5335,
+//   title: "Apple",
+// };
+
+// const userProduct = new Map();
+
+// userProduct.set(user1, product1).set(user2, product2);
+
+// console.log(userProduct);
+// // Виведе:
+// // Map(2) {
+// //     { id: 1323, name: 'Ivan' } => { id: 5314, title: 'Mobile Phone' },
+// //     { id: 4231, name: 'Anton' } => { id: 5335, title: 'Apple' }
+// //   }
+
+// console.log(userProduct.has(user1)); // Виведе:true
+
+// const productClientList = new Map();
+
+// productClientList.set(product1, new Set());
+
+// console.log(productClientList); // Виведе: Map(1) { { id: 5314, title: 'Mobile Phone' } => Set(0) {} }
