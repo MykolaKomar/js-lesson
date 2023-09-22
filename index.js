@@ -3018,3 +3018,262 @@
 // productClientList.set(product1, new Set());
 
 // console.log(productClientList); // Виведе: Map(1) { { id: 5314, title: 'Mobile Phone' } => Set(0) {} }
+
+// Урок 22
+// Вбудовані можливості: JSON та URL
+
+// JSON --це вбудований об'єкт, який має вбудовані функції
+// для роботи з JSON всередині мови програмування JS
+
+// Перетворення в JSON формат
+// це вбудована функуція, яка перетворює значення JavaScript
+// на рядок у форматі JSON
+// JSON.stringify(value, replacer, space)
+//  ** value -- Об'єкт або значення JavaScript, яке буде перетворено на
+//     JSON рядок.
+//  ** replacer -- Функція або масив, які використовуються для контролю над
+//     тим, які значення будуть включені у JSON рядок або як вони
+//     будуть змінені.
+//  ** space -- Форматування рядка JSON з перенесенням рядків і відступами
+//     для кращої зрозумілості. Може бути числом або рядком.
+
+// const data = {
+//   id: 1043,
+//   login: "user3431",
+//   password: "1234561we@",
+//   role: "Admin",
+// };
+
+// const jsonData = JSON.stringify(data);
+
+// console.log(jsonData); // Виведе: {"id":1043,"login":"user3431","password":"1234561we@","role":"Admin"}
+
+// ||||||||||||||||||||||||||||||||||||||||||||||||
+
+// const data = {
+//   id: 1043,
+//   login: "user3431",
+//   password: "1234561we@",
+//   role: "Admin",
+// };
+
+// const jsonData = JSON.stringify(
+//   data,
+//   (key, value) => {
+//     if (typeof value === "string") {
+//       return value.toUpperCase();
+//     }
+
+//     if (typeof value === "number") {
+//       return value * 10;
+//     }
+
+//     console.log(key, value);
+//     return value;
+//   },
+//   1
+// );
+
+// console.log(jsonData);
+// // Виведе:
+// //  { id: 1043, login: 'user3431', password: '1234561we@', role: 'Admin' }
+// // {
+// //     "id": 10430,
+// //     "login": "USER3431",
+// //     "password": "1234561WE@",
+// //     "role": "ADMIN"
+// // }
+
+// Отримання значення з JSON формату
+// Це вбудована функція, яка перетворює рядок у форматі
+// JSON в об'єтк або значення в форматі JavaScript
+// JSON.parse(text, reviver)
+
+// ** text -- Рядок у форматі JSON який має бути розпарсений
+// ** reviver(необов'язковий) -- Функція, яка виконує перетворення
+//    з такими аргументами:
+//    ** key -- ключ, пов'язаний зі значенням
+//    ** velue -- Значення, створене синтаксичним аналізом
+
+// const data = {
+//   id: 1043,
+//   login: "user3431",
+//   password: "1234561we@",
+//   role: "Admin",
+// };
+
+// const jsonData = JSON.stringify(
+//   data,
+//   (key, value) => {
+//     if (typeof value === "string") {
+//       return value.toUpperCase();
+//     }
+
+//     if (typeof value === "number") {
+//       return value * 10;
+//     }
+//     return value;
+//   },
+//   1
+// );
+
+// console.log(jsonData);
+// // Виведе:
+// // {
+// //     "id": 10430,
+// //     "login": "USER3431",
+// //     "password": "1234561WE@",
+// //     "role": "ADMIN"
+// // }
+
+// const parseData = JSON.parse(jsonData, (key, value) => {
+//   if (typeof value === "string") {
+//     return value.toLowerCase();
+//   }
+
+//   if (typeof value === "number") {
+//     return value / 10;
+//   }
+
+//   return value;
+// });
+
+// console.log(parseData); // Виведе:{ id: 1043, login: 'user3431', password: '1234561we@', role: 'admin' }
+
+// Що таке URL?
+// URL - це вбудований об'єкт-сутність, який має вбудовані
+// функції для роботи з URL-адресою (Uniform Resource Locator),
+// що використовується для ідентифікації та доступу до ресурсів в Інтернеті
+
+// Створення URL через конструктор
+// Для створення через конструктор потрібно викликати сам
+// конструктор, що може створити URL об'єкт
+// new URL (url , base)
+
+//  ** url -- Рядок який представляє URL - адрсу
+//  ** base -- Рядок, що визначає базовий URL, якщо першим
+//     аргументом була адреса не повна, а лише відносний шлях
+
+// const url1 = new URL("/path", "https://www.example.com");
+// console.log(url1);
+// //  або
+
+// const url2 = new URL("https://www.example.com/path");
+// console.log(url2);
+
+// // Виведе
+// // URL {
+// //     href: 'https://www.example.com/path',
+// //     origin: 'https://www.example.com',
+// //     protocol: 'https:',
+// //     username: '',
+// //     password: '',
+// //     host: 'www.example.com',
+// //     hostname: 'www.example.com',
+// //     port: '',
+// //     pathname: '/path',
+// //     search: '',
+// //     searchParams: URLSearchParams {},
+// //     hash: ''
+// //   }
+
+// Отримання URL
+// Це вбудована властивість, яка містить рядок, який містить URL-адресу
+// .href
+
+// const url = new URL("https://www.example.com/path");
+
+// console.log(url.href); // Виведе: https://www.example.com/path
+
+// Протокол URL
+// Це вбудована властивість, яка містить протокол,
+// що використовується URL-адресі
+// .protocol
+
+// const url = new URL("https://www.example.com/path");
+
+// console.log(url.protocol); // Виведе: https:
+
+// Шлях до ресурсу URL
+// Це вбудована властивість, яка містить шлях до ресурсу,
+// який міститься в URL-адресі
+// .pathname
+
+// const url = new URL("https://www.example.com/path");
+
+// console.log(url.pathname); // Виведе: /path
+
+// Отримання початкового URL
+// Це вбудована властивість, яка повертає початковий URL
+// адресу самого ресурсу без шляху
+// .origin
+
+// const url = new URL("https://www.example.com/path");
+
+// console.log(url.origin); // Виведе: https://www.example.com
+
+// Ім'я хосту в URL
+// Це вбудована властивість, яка містить інформацію про доменне
+// ім'я (хост) в URL - адресі
+// host  hostname
+
+// const url = new URL("https://www.example.com:4000/path");
+
+// console.log(url.host); // Виведе: www.example.com:4000
+// console.log(url.hostname); // Виведе: www.example.com
+
+// Якір в URL
+// Це вбудована властивість, яка містить якір з URL - адресі
+// hash
+
+// const url = new URL("https://admin:123456@www.example.com:4000/path#how-to-do");
+
+// console.log(url.hash); // Виведе: www.example.com:4000
+
+// Пароль в URL
+// Це вбудована властивість, яка містить пароль з URL - адреси
+// .password
+
+// const url = new URL("https://admin:123456@www.example.com:4000/path#how-to-do");
+
+// console.log(url.password); // Виведе: 123456
+
+// Порт в URL
+// Це вбудована властивість, яка містить порт з URL - адреси
+// .port
+
+// const url = new URL("https://admin:123456@www.example.com:4000/path#how-to-do");
+
+// console.log(url.port); // Виведе: 4000
+
+// Ім'я користувача в URL
+// Це вбудована властивість, яка містить ім'я користувача URL - адреси
+// .username
+
+// const url = new URL("https://admin:123456@www.example.com:4000/path#how-to-do");
+
+// console.log(url.username); // Виведе: admin
+
+// Параметри в URL
+// Це вбудована властивість, яка містить рядок параметрів
+// (після символу "?") з URL - адреси
+// .search
+
+// const url = new URL(
+//   "https://admin:123456@www.example.com:4000/path?param=value#how-to-do"
+// );
+
+// console.log(url.search); // Виведе: ?param=value
+
+// Спеціальний об'єкт з параметрами в URL
+// Це вбудована влкстивість, яка повертає спеціальний об'єк, який надає
+// зручні вбудовані функції для взаємодії з параметрами в URL - адресі
+// .searchParams
+
+// const url = new URL(
+//   "https://admin:123456@www.example.com:4000/path?param=value#how-to-do"
+// );
+
+// console.log(url.searchParams); // Виведе: URLSearchParams { 'param' => 'value' }
+
+// console.log(url.searchParams.has("param")); // Виведе:true
