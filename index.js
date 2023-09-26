@@ -3277,3 +3277,333 @@
 // console.log(url.searchParams); // Виведе: URLSearchParams { 'param' => 'value' }
 
 // console.log(url.searchParams.has("param")); // Виведе:true
+
+// Урок 23
+// Вбудовані можливості: ДАТА
+
+// Дата (Date) -- це вбудований об'єкт-сутність, який представляє
+// дату і час, дозволяє отримувати, зберігати та маніпулювати
+// значеннями дати та часу в мові програмування JavaScript
+
+// GMT (Greenwich Mean Time) -- є стандарт часу, який використовується як базова
+// відлікова точка визначення часових зон у світі
+
+// UTC (Coordinated Universal Time) -- це стандарт часу, який
+// використовується для синхронізації часових зон по всьому
+// світу, є прямим нащадком Greenwich Mean Time (GMT)
+
+// Створення дати через конструктор
+
+// Для створення через конструктор потрібно викликати сам коструктор
+// що може створити об'єкт Date
+
+// new Date (аргумент)
+
+// const date = new Date();
+
+// console.log(date); // Виведе: 2023-09-26T13:50:07.750Z
+
+// Формат ISO (International Organization for Standartization) --
+// це стандартизовиний формат для представлення даних
+
+// Формат ISO часто використовується для представлення дат,
+// часу, кодів країн, валют, мов та багатьох інших типів даних.
+// Це допомагає забезпечити уніфіковану та стандартизовану обробку
+// цих даних у різних системах та програмах
+
+// Перетворити дату в рядок в форматі ISO
+// Це вбудована функція, яка перетворює дату в ISO
+// .toISOString()
+
+// const date = new Date();
+
+// const dateString = date.toISOString();
+
+// console.log(dateString); // Виведе: 2023-09-26T14:08:01.822Z
+
+// console.log(new Date(dateString)); // Виведе: 2023-09-26T14:10:42.646Z
+
+// Отримати дату з рядка в форматі ISO
+// Це вбудована функція, яка призначена для аналізування рядків,
+// що містять дати, і перетворення їх у відповідні числові значення
+// використовуючи ISO формат дати
+// Date.parse(dataString)
+
+// const date = new Date();
+
+// const dateString = date.toISOString();
+
+// console.log(dateString); // Виведе: 2023-09-26T14:08:01.822Z
+
+// console.log(Date.parse(dateString));
+// // Виведе: 1695737652234
+// // Повертає ціле число — кількість мілісекунд, що пройшли
+// // з 1 січня 1970 року до поточного моменту.
+
+// Перетворення дати в рядок тексту
+// Це вбудовані функції які, повертають рядок, який
+// представляє дату та час у вигляді зрозумілому для людини
+// .toString()
+// .toUTCString()
+// .toTimeString()
+// .toDateString()
+
+// const date = new Date();
+
+// const dateString = date.toISOString();
+
+// console.log(date.toString()); // Виведе: Tue Sep 26 2023 17:21:51 GMT+0300 (Eastern European Summer Time)
+
+// console.log(date.toUTCString()); // Виведе: Tue, 26 Sep 2023 14:22:46 GMT
+
+// console.log(date.toTimeString()); // Виведе: 17:23:31 GMT+0300 (Eastern European Summer Time)
+
+// console.log(date.toDateString()); // Виведе: Tue Sep 26 2023
+
+// Отримати зсув часового поясу
+// Це вбудована функція, яка повертає зсув часового поясу між
+// локальним часом та часом UTC (відлік від стандартного часу, що
+// використовується у світі)
+// .getTimezoneOffset()
+
+// const date = new Date();
+// const zone = date.getTimezoneOffset();
+
+// console.log(zone); // Виведе: -180
+
+// const zoneNorm = date.getTimezoneOffset() / -60;
+
+// console.log(zoneNorm); // Виведе: 3
+
+// Створення поточноъ дати
+// Це вбудована функція, яка повертає кількість мілісекунд
+//  що пройшло з 1 січня 1970 року 00:00:00 UTC до поточного моменту
+// Date.now()
+
+// const user = -3; // TimeZone
+
+// function getUserTimeZone(timezone) {
+//   let date = Date.now();
+
+//   const myTimezone = new Date().getTimezoneOffset() / -60;
+
+//   //   console.log(myTimezone); // Виведе: 3
+//   date -= 1000 * 60 * 60 * myTimezone;
+
+// //   date += 1000 * 60 * 60 * myTimezone;
+
+//   return date;
+// }
+
+// console.log(new Date(getUserTimeZone(user)).toString()); // Виведе: Tue Sep 26 2023 14:51:31 GMT+0300 (Eastern European Summer Time)
+
+// console.log(new Date().toUTCString()); // Виведе: Tue, 26 Sep 2023 14:54:44 GMT
+
+// Створення дати через конструктор *     *  * * * * * * *
+// Створення дати за UTC
+// Date.UTC(year, monthIndex, day, hour, minute, second, milisecond)
+// const user = -3; // TimeZone
+
+// function getUserTimeZone(timezone) {
+//   let date = new Date(Date.UTC(2023, 5, 26, 12, 30, 0, 0));
+//   console.log(date.toString()); // Виведе: Mon Jun 26 2023 15:30:00 GMT+0300 (Eastern European Summer Time)
+// }
+// getUserTimeZone(user);
+
+// Отримати поточний універсальний час
+// Це вбудована функція, яка повертає час, що пройшов
+// від 1 січня 1970 року UTC до вказаної дати в мілісекундах
+// .getTime()
+
+// const user = -3; // TimeZone
+// function getUserTimeZone(timezone) {
+//   let date = new Date(Date.UTC(2023, 5, 26, 12, 30, 0, 0));
+//   console.log(date.getTime()); // Виведе: 1687782600000
+// }
+// getUserTimeZone(user);
+// console.log(new Date(1687782600000).toString()); // Виведе: Mon Jun 26 2023 15:30:00 GMT+0300 (Eastern European Summer Time)
+
+// Встановити поточний універсальний час
+// Це вбудована функція, яка встановлює значення часу
+// для об'єкта дати в універсальному форматі, в якому дата є час,
+// що пройшов від 1 січня 1970 року UTC до вказаної дати
+// .setTime(timeValue)
+
+// const user = -3; // TimeZone
+// function getUserTimeZone(timezone) {
+//   let date = new Date(Date.UTC(2023, 5, 26, 12, 30, 0, 0));
+//   console.log(date.toString()); // Виведе: Mon Jun 26 2023 15:30:00 GMT+0300 (Eastern European Summer Time)
+//   console.log(date.toUTCString()); // Виведе: Mon, 26 Jun 2023 12:30:00 GMT
+
+//   const myTimezone = date.getTimezoneOffset() / -60;
+
+//   date.setTime(date.getTime() - 1000 * 60 * 60 * myTimezone);
+//   date.setTime(date.getTime() + 1000 * 60 * 60 * timezone);
+
+//   return date;
+// }
+// const userDate = getUserTimeZone(user);
+// console.log(userDate.toString()); // Виведе: Mon Jun 26 2023 09:30:00 GMT+0300 (Eastern European Summer Time)
+// console.log(userDate.toUTCString()); // Виведе: Mon, 26 Jun 2023 06:30:00 GMT
+
+// Отримати години
+// Це вбудована функції, які повертають години (від 0 до 23)
+// .getHours()
+// .getUTCHours()
+
+// const user = -3; // TimeZone
+// function getUserTimeZone(timezone) {
+//   let date = new Date(Date.UTC(2023, 5, 26, 12, 30, 0, 0));
+//   console.log(date.getHours()); // Виведе: 15
+//   console.log(date.getUTCHours()); // Виведе: 12
+
+//   return date;
+// }
+// const userDate = getUserTimeZone(user);
+
+// Встановити години
+// Це вбудовані функції, які встановлюють годину (від 0 до 23) для
+// заданого об'єкта дати, змінюючи його значення
+// .setHours(hoursValue, minutesValue, secondValue, msValue)
+// .setUTSHours(hoursValue, minutesValue, secondValue, msValue)
+
+// const user = -3; // TimeZone
+// function getUserTimeZone(timezone) {
+//   let date = new Date(Date.UTC(2023, 5, 26, 12, 30, 0, 0));
+//   console.log(date.getHours()); // Виведе: 15
+//   console.log(date.getUTCHours()); // Виведе: 12
+
+//   date.setHours(date.getUTCHours() + timezone);
+
+//   return date;
+// }
+// const userDate = getUserTimeZone(user);
+
+// console.log(userDate.getHours()); // Виведе: 9
+// console.log(userDate.getUTCHours()); // Виведе: 6
+
+// console.log(userDate.toTimeString()); // Виведе: 09:30:00 GMT+0300 (Eastern European Summer Time)
+
+// */-*/-*/-*/-*/-*/-*/-*/-*/-/-*/-*/-*/-*/-*/-*/-*/-*/-*/
+
+// Отримати рік
+// Це вбудовані функції, які повертають чотирицифрове число, що
+// редставляє рік за вказаною датою
+// .getFullYear()
+// .getUTCFullYear()
+
+// const date = new Date();
+
+// const dateString = date.toISOString();
+// console.log(date.getFullYear()); // Виведе: 2023
+
+// Встановити рік
+// Це вбудовані функції, які встановлюють значення року
+// для заданої дати в об'єкті Date
+// .setFullYear(yearValue, monthValue, dateValue)
+// .setUTCАFullYear(yearValue, monthValue, dateValue)
+
+// const date = new Date();
+
+// console.log(date.getFullYear()); // Виведе: 2023
+
+// date.setFullYear(2020);
+
+// console.log(date.getFullYear()); // Виведе: 2020
+
+// Отримати місяць
+// Це вбудовані функції, які повертають номер місяця (від 0 до 11)
+// .getMonth()
+// .getUTCMonth()
+
+// const date = new Date();
+
+// console.log(date.getMonth()); // Виведе: 8
+
+// Встановити місяць
+// .setMonth(monthValue, dateValue)
+// .setUTCMonth(monthValue, dateValue)
+
+// const date = new Date();
+
+// console.log(date.getMonth()); // Виведе: 8
+// date.setMonth(10);
+
+// console.log(date.getMonth()); // Виведе: 10
+
+// Отримати день місяця
+// Це вбудована функції, які повертають день місяця
+// (від 1 до 31) для заданої дати
+// .getDate()
+// .getUTCdate()
+
+// const date = new Date();
+
+// console.log(date.getDate()); // Виведе: 26
+
+// Встановити день місяця
+// Це вбудована функції, які встановлюють день місяця
+// для певної дати
+// .setDate(dateValue)
+// .setUTCDate(dateValue)
+
+// const date = new Date();
+
+// console.log(date.getDate()); // Виведе: 26
+// date.setDate(10);
+
+// console.log(date.getDate()); // Виведе: 10
+
+// Отримати день тижня
+// Це функція, яка повертає числове значення,
+// що відповідають дню тижня (0-6) для заданої дати
+// .getDay()
+// .getUTCDay()
+
+// const date = new Date();
+
+// console.log(date.getDay()); // Виведе: 2
+
+// Отримати хвилини
+// Це функції які поверають хвилини від 0 до 59
+// .getMinutes()
+// .getUTCMitutes()
+
+// const date = new Date();
+
+// console.log(date.getMinutes()); // Виведе: 11
+
+// Встановити хвилини
+// Це функції які встановлюють значення хвилини
+// .setMinutes(minutesValue, secondValue, msValue)
+// .setUTCMitutes(minutesValue, secondValue, msValue)
+
+// const date = new Date();
+
+// console.log(date.getMinutes()); // Виведе: 13
+
+// date.setMinutes(59);
+
+// console.log(date.getMinutes()); // Виведе: 59
+
+// Отримати секунди
+// Це функції які поверають секунди від 0 до 59
+// .getSeconds()
+// .getUTCSeconds()
+
+// const date = new Date();
+
+// console.log(date.getSeconds()); // Виведе: 49
+
+// Встановити секунди
+// Це функції які встановлюють значення секунди
+// .setSeconds( secondValue, msValue)
+// .setUTCSeconds(secondValue, msValue)
+
+// const date = new Date();
+
+// console.log(date.getSeconds()); // Виведе: 1
+
+// date.setSeconds(59);
+
+// console.log(date.getSeconds()); // Виведе: 59
