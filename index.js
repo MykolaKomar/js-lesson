@@ -3714,3 +3714,146 @@
 // console.log(0.1 + 0.2 === 0.3); // Виведе: false
 // console.log(Math.fround(0.1 + 0.2) === Math.fround(0.3)); // Виведе: true
 // console.log(Math.fround(0.1 + 0.2) )
+
+// Урок 25
+
+// Вбудовані можливості: КОНСОЛЬ
+// Консоль (console) -- це вбудований об'єкт, який надає доступ
+// до консолі браузера або термінала, дозволяє виконувати
+// операції з налагодження коду та виведення інформації
+
+// Вивід повідомлень
+// Це вбудована функції, які виводять в консоль повідомлення
+
+// console.error() -- Відображення критичних помилок
+// {
+//   let a = 5;
+//   a = 10;
+//   console.error("Помилка, а змінна повинна бути 5"); //Виведе: Помилка, а змінна повинна бути 5
+// }
+// console.expection() -- Виведення непередбачених помилок
+// console.info() -- Відображення корисних повідомлень
+// console.warn() -- Виведення попереджень про петенційні проблеми
+// console.log() -- Запис повідомлень для відстеження роботи програми
+// console.debug() -- Виведення додаткових деталей для налагодження
+
+// Групування
+// це вбудвана функція, яка дозволяє групувати повідомлення
+// в консолі разом, щоб створити більш організований вивід
+// .group(label) -- звичайна група
+// .groupCollapsed(label) -- згорнута група
+// .groupEnd(label)
+
+// console.group("Group 1");
+// console.log("test");
+// console.warn("test");
+// console.group("Group 2");
+// console.debug("test");
+// console.groupEnd;
+
+// Виведе:
+// Group 1
+//   test
+//   test
+//   Group 2
+//     test
+
+// Вимірювання часу
+// Це вбудована функція, яка дозволяє вимірювати
+// час виконання певного фрагменту коду
+// .time(label)
+// .timeLog(label)
+// .timeEnd(label)
+
+// const counterLabel = "Timer";
+
+// console.time(counterLabel);
+
+// console.group("Group 1");
+// console.log("test");
+// console.warn("test");
+// console.group("Group 2");
+// console.timeLog(counterLabel);
+// // Виведе: Timer: 7.242ms
+
+// console.debug("test");
+// console.groupEnd;
+
+// console.timeEnd(counterLabel);
+// // Виведе: Timer: 8.024ms
+
+// Вимірювання кількості виконання
+// Це вбудована функції, які дозволяють вимірювати
+// кількість виконання певного фрагменту коду
+// .count(label)
+// .countReset(label) -- оновити лічільник
+
+// const counterLabel = "Timer";
+
+// console.time(counterLabel);
+// console.count(counterLabel);
+
+// console.timeLog(counterLabel);
+// console.count(counterLabel);
+
+// console.timeEnd(counterLabel);
+// console.countReset(counterLabel);
+
+// Відстеження викликів
+// Це вбудована функція, яка показує
+// шлях виконання коду (стек викликів) до того місця,
+// де була викликана функція
+// .trace(value1, value2, ...valueN)
+
+// const test1 = () => console.trace("Hello");
+
+// const test2 = () => test1();
+
+// const test3 = () => test2();
+
+// test3();
+
+// Таблиця консолі
+// Це вбудована функція, яка використовується для
+// відображення таблиці з даними у консолі
+// .table(data, columns)
+
+// const data = [
+//   { name: "John", age: 25, city: "New York" },
+//   { name: "Alice", age: 30, city: "London" },
+// ];
+
+// console.table(data);
+// console.table(data, ["name", "age"]);
+
+// Перевірка умови
+// Це вбудована функція, яка використовується для перевірки
+// умови та виведення повідомлення, якщо умова не виконується
+// .assert(assertion, ...value1, value2,...valueN)
+
+// const a = 5;
+// const b = 10;
+
+// const result = a > b;
+
+// console.assert(result, "Info");
+
+// Очищення вмісту
+// Це вбудована функція, яка використовується для
+// очищення вмісту консолі
+// .clear()
+
+// const a = 5;
+// const b = 10;
+
+// const result = a > b;
+
+// console.assert(result, "Info");
+// console.clear();
+
+// Стилізація тексту
+// Можна використовувати конструкцію %c
+// на початку рядка тексту, який потрібно стилізувати, а
+// другим аргументом рядок тексту з CSS кодом
+
+// console.log("%c Hello World", "color: yellow; background-color: blue");
