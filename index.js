@@ -3858,7 +3858,7 @@
 
 // console.log("%c Hello World", "color: yellow; background-color: blue");
 
-// Урок 27
+// Урок 26
 // Регулярні вирази
 // можна писати через https://regex101.com/r/IfT04i/1
 
@@ -4053,3 +4053,190 @@
 // \n
 
 // ВИРАЗИ які найчастійше використовуються
+
+// Урок 27
+// Вбудовані можливості: Регулярний вираз
+
+// Регулярний вираз (regular expression)  --
+// це вбудований об'єкт сутність, яка надає вбудовані функції для роботи
+// з регулярними виразами в JS
+
+// Створення через конструктор
+// Це вбудований конструктор, який створює об'єкт регулярного виразу
+// (regular expression)
+// new RegExp(pattern, flags)
+// RegExp(pattern, flags)
+
+// Cтворення через рядок
+// Для створення через рядок потрібно вказати конструкцію
+// / pattern / flags
+
+// const regexp = /test/g;
+
+// const regexp1 = RegExp("test", "g");
+
+// console.log(regexp); // Виведе: /test/g
+// console.log(regexp1); // Виведе: /test/g
+
+// Прапорці властивості
+// Це вбудована властивість, яка повертає рядок, що містить усі
+// прапорці регулярного виразу
+// .flags
+
+// const regexp = /test/g;
+// const regexp1 = /test/gm;
+
+// console.log(regexp.flags); // Виведе: g
+// console.log(regexp1.flags); // Виведе: gm
+
+// Глобальний прапорець
+// Це вбудована властивість,яка вказує, чи використовується
+// глобальний пошук під час виконання регулярного виразу
+// .global
+
+// const regexp = /test/g;
+// const regexp1 = /test/m;
+
+// console.log(regexp.global); // Виведе: true
+// console.log(regexp1.global); // Виведе: false
+
+// Багаторядковий режим
+// Це вбудована властивість яка, вказує чи враховувати символ
+// нового рядка (\n) як роздільники початку і кінця рядка в регулярному виразі
+// .multiline
+
+// const regexp = /test/g;
+// const regexp1 = /test/m;
+
+// console.log(regexp.multiline); // Виведе: false
+// console.log(regexp1.multiline); // Виведе: true
+
+// Зіставлення нового рядка з крапкою
+// Це вбудована властивість, яка вказує, чи враховувати
+// символ нового рядка (перенесення рядка) при виконанні
+// пошуку з використанням точкового оператора
+// .dotAll
+
+// const regexp = /test/g;
+// const regexp1 = /test/s;
+
+// console.log(regexp.dotAll); // Виведе: false
+// console.log(regexp1.dotAll); // Виведе: true
+
+// Чи враховує регістр символів при пошуку
+// Це вбудована властивість, яка вказує, чи повинен регулярний вираз
+// враховувати регіст символів під час пошуку
+// .ignoreCase
+
+// const regexp = /test/g;
+// const regexp1 = /test/i;
+
+// console.log(regexp.ignoreCase); // Виведе: false
+// console.log(regexp1.ignoreCase); // Виведе: true
+
+// Виконання регулярного виразу
+// Це вбудована функція, яка виконує пошук вказаного регулярного
+// виразу у рядку і повертає збіги
+// .exec(str)
+
+// const regexp = /test/g;
+
+// const result = regexp.exec("This is test");
+
+// console.log(result); // Виведе: [ 'test', index: 8, input: 'This is test', groups: undefined ]
+
+// Перевірка наявності збігу
+// Це вбудована функція, яка використовується для перевірки, чи
+// збігається регулярний вираз з вказаним рядком
+// .test(str)
+
+// const regexp = /test/g;
+
+// const result = regexp.test("This is test");
+
+// console.log(result); // Виведе: true
+
+// Вихідний текст
+// Це вбудована властивість. яка повертає вихідний текст (або шаблон)
+// регулярного виразу у вигляді рядка
+// .source
+
+// const regexp = /test/g;
+
+// const result = regexp.source;
+
+// console.log(result); // Виведе: test
+
+// Останній індекс
+// це вбудована властивість, яка визначає позицію, на якій
+// розпочинається наступний пошук у рядку, кооли виконується
+// глобальний пошук з використанням регулярного виразу
+// .lastIndex
+
+// const regexp = /(?<group1>.e)(?<group2>st)/gims;
+
+// const result = regexp.source;
+
+// regexp.lastIndex = 9;
+
+// console.log(regexp.exec("This is test and est"));
+// // Виведе:
+// // [
+// //   ' est',
+// //   ' e',
+// //   'st',
+// //   index: 16,
+// //   input: 'This is test and est',
+// //   groups: [Object: null prototype] { group1: ' e', group2: 'st' }
+// // ]
+
+// Зміна рядків
+// Це вбудована функції, які замінюють підрядки в рядку на нові
+// значення і повертають новий рядок
+// Цей метод шукає підрядки, відповідно певному шаблону, і
+// заміняє їх іншими вказаними значеннями
+// .replace(pattern, replacement)
+// .replaceAll(pattern, replacement)
+
+// const regexp = /(?<group1>.e)(?<group2>st)/gims;
+
+// const test = "This is test and est";
+
+// console.log(test.replace(regexp, "###")); // Виведе: This is ### and###
+// console.log(test.replaceAll(regexp, "###")); // Виведе: This is ### and###
+
+// Пошук підрядка в рядку
+// Це вбудована функція, яка використовується для пошуку входження
+// певного регулярного виразу в рядку
+// .search(regexp)
+
+// const regexp = /(?<group1>.e)(?<group2>st)/gims;
+
+// const test = "This is test and est";
+
+// console.log(test.search(regexp)); // Виведе: 8 (ындекс входження)
+
+// Пошук збігів у рядку
+// Це вбудована функція, яка шукає збіги з регулярним виразом
+// у рядку і повертають підрядки, які збігаються, у вигляді масиву
+// .match(regexp)
+// .matchAll(regexp)
+
+// const regexp = /(?<group1>.e)(?<group2>st)/gims;
+
+// const test = "This is test and est";
+// const result = test.matchAll(regexp);
+
+// console.log(test.match(regexp)); // Виведе: [ 'test', ' est' ]
+// console.log(result.next());
+// // Виведе: {
+// //   value: [
+// //     'test',
+// //     'te',
+// //     'st',
+// //     index: 8,
+// //     input: 'This is test and est',
+// //     groups: [Object: null prototype] { group1: 'te', group2: 'st' }
+// //   ],
+// //   done: false
+// }
