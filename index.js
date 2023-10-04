@@ -4240,3 +4240,118 @@
 // //   ],
 // //   done: false
 // }
+
+// Урок 28
+// Обробка помилок
+
+// Обробка помилок (або винятків) -- це механізм, що дозволяє
+// програмі впоратись з помилками або непередбачуваними ситуаціями
+// які можуть виникати під час виконання програмного коду
+
+// Ключове слово "спробувати" (try) -- це ключове слово, яке
+// використовується для визначення блоку коду, в якому відбувається
+// виконання певного коду, де можуть виникати помилки
+// try {...}
+
+// Ключове слово "перехопити" (catch) -- це слово,
+// яке використовується для визначення блоку коду, в якому
+// обробляються помилки, які з'явились в блоці з try
+// catch () {...}
+
+// Ключове слово "нарешті" (finally) -- це ключове слово, яке
+// використовується для визначення блоку коду, який завжди виконується
+// після блоку try-catch
+// finally {...}
+
+// try {
+//   const a = 10;
+//   a = 5;
+// } catch (error) {
+//   console.log("hello world");
+// } finally {
+//     console.log("2");
+// }
+
+// Помилка (Error) -- це вбудований об'єкт-сутність,
+// що використовується для створення помилок, містить
+// інформацію про помилку
+
+// Створення через конструктор
+// Це вбудований конструктор, який створює об'єкт помилки
+// new Error(message, options)
+// Error(message, options)
+
+// Оператора "кинути" (throw) -- це оператор, який
+// використовується для викидання помилки  в коді
+// throw new Error
+
+// Повідомлення помилки
+// Це вбудована влавстивість, яка містить повідомлення помилки
+// .massage
+
+// try {
+//   throw new Error("Це приклад помилки");
+// } catch (error) {
+//   console.log(error.message); // Виведе: Це приклад помилки
+// }
+
+// Причина помилки
+// Це вбудована властивість, яка містить посилання на об'єкт,
+// який призвів до винекнення помилки
+// Це допомагає відстежувати ланцюжок причин, які призвели
+// до винекнення помилки
+
+// try {
+//   let error = new Error("First error");
+//   throw new Error("Second error", { cause: err });
+// } catch (err) {
+//   console.log(error.cause); // Виведе: RangeError
+}
+
+// Назва помилки
+// Це вбудована властивість, яка використовується для
+// отримання або встановлення назви об'єкта помилка
+// Вона дозволяє ідентифікувати тип помилки, який стався під
+// час виконання програми
+// .name
+
+// try {
+//   throw new RangeError("Це приклад помилки");
+// } catch (error) {
+//   console.log(error.name); // Виведе: RangeError
+// }
+
+// Стек викликів
+// Це вбудована властивість, що містить стек викликів
+// .stack
+
+// function throwError() {
+//   throw new Error();
+// }
+
+// try {
+//   throwError();
+// } catch (error) {
+//   console.log(error.stack);
+// }
+// // Виведе:
+// // Error
+// //     at throwError (D:\Mykola\ALL\Courses IT BRAINS\work\js\index.js:4316:9)
+// //     at Object.<anonymous> (D:\Mykola\ALL\Courses IT BRAINS\work\js\index.js:4320:3)
+// //     at Module._compile (node:internal/modules/cjs/loader:1254:14)
+// //     at Module._extensions..js (node:internal/modules/cjs/loader:1308:10)
+// //     at Module.load (node:internal/modules/cjs/loader:1117:32)
+// //     at Module._load (node:internal/modules/cjs/loader:958:12)
+// //     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+// //     at node:internal/main/run_main_module:23:47
+
+// Перетворити помилку в рядок
+// Це вбудована функція, яка повертає рядок,
+// який представляє об'єкт помилки у вигляді тексту
+// .toString()
+
+// try {
+//   throw new RangeError("Це приклад помилки");
+// } catch (error) {
+//   console.log(error.toString()); // Виведе: RangeError: Це приклад помилки
+// }
