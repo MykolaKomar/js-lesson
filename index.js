@@ -4306,7 +4306,7 @@
 //   throw new Error("Second error", { cause: err });
 // } catch (err) {
 //   console.log(error.cause); // Виведе: RangeError
-}
+// }
 
 // Назва помилки
 // Це вбудована властивість, яка використовується для
@@ -4355,3 +4355,391 @@
 // } catch (error) {
 //   console.log(error.toString()); // Виведе: RangeError: Це приклад помилки
 // }
+
+// Урок 29
+// ООП
+// Об'єктно-орієнтоване програмування (ООП) --
+// це підхід до написання прогам, де програма організовується
+// як набур об'єктів, що взаємодіють
+
+// Кожен об'єкт є представником певного класу, має властивості
+// і може виконувати методи
+
+// Об'єкти взаємодіють між собою виконуючи
+// методи та знімаючи властивості об'єкта
+
+// НАСЛІДУВАННЯ
+// Наслідування (Inheritance) -- це принцип ООП, який дозволяє створювати
+// нові об'єкти на основі існуючих об'єктів успадковуючи їх властивості,
+// методи та ієрархію
+
+// Прототип -це об'єкт, який використовується для спадкування властивостей та методів
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Наслідування прототипу
+// const dog = { ...Animal };
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// dog.say();
+
+// Створення об'єкта з прототипом
+// Це вбудована функція, яка створює новий об'єкт з вказаним
+// прототипом і необов'язковими властивостями
+// Object.create(proto, properties)
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Створення об'єкта з прототипом
+// const dog = Object.create(Animal);
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// dog.say();
+
+// Animal.go = function () {
+//   console.log(`${this.name} біжить`); // Виведе: Бобік біжить
+// };
+
+// dog.go();
+
+// Отримання прототипу
+// Це вбудована функція, яка повертає прототип об'єкта
+// Object.getPrototypeOf(obj)
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Створення об'єкта з прототипом
+// const dog = Object.create(Animal);
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// dog.say();
+
+// Animal.go = function () {
+//   console.log(`${this.name} біжить`); // Виведе: Бобік біжить
+// };
+
+// dog.go();
+// // Отримання прототипу
+// console.log(Object.getPrototypeOf(dog));
+
+// // Виведе:
+// // {
+// //     name: 'Тварини',
+// //     voice: 'Звук',
+// //     say: [Function: say],
+// //     go: [Function (anonymous)]
+// //   }
+
+// Перевірка об'єкта на прототип
+// Це вбудована функція, яка перевіряє, чи є об'єкт, для якого
+// вона викликається, прототипни об'єктом іншого об'єкта
+// .isPrototypeOf(object)
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Створення об'єкта з прототипом
+// const dog = Object.create(Animal);
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// dog.say();
+
+// Animal.go = function () {
+//   console.log(`${this.name} біжить`); // Виведе: Бобік біжить
+// };
+
+// dog.go();
+// // Отримання прототипу
+// console.log(Object.getPrototypeOf(dog));
+
+// // Виведе:
+// // {
+// //     name: 'Тварини',
+// //     voice: 'Звук',
+// //     say: [Function: say],
+// //     go: [Function (anonymous)]
+// //   }
+
+// console.log(Animal.isPrototypeOf(dog)); // Виведе: true
+
+// Змінювати прототип
+// Це вбудована функція, яка дозволяє змінити рпототип об'єкта
+// Object.setPrototypeOf(obj, prototype)
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Створення об'єкта з прототипом
+// const dog = Object.create(Animal);
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// dog.say();
+
+// Animal.go = function () {
+//   console.log(`${this.name} біжить`); // Виведе: Бобік біжить
+// };
+
+// dog.go();
+// // Отримання прототипу
+// console.log(Object.getPrototypeOf(dog));
+// // Виведе:
+// // {
+// //     name: 'Тварини',
+// //     voice: 'Звук',
+// //     say: [Function: say],
+// //     go: [Function (anonymous)]
+// //   }
+
+// console.log(Animal.isPrototypeOf(dog)); // Виведе: true
+
+// Object.setPrototypeOf(dog, null);
+
+// console.log(Object.getPrototypeOf(dog)); // Виведе: null
+
+// ІНКАПСУЛЯЦІЯ
+// Інкапсуляція (Encapsulation) -- це принцип ООП, який
+// дозволяє об'єднати пов'язані дані та функції, в один об'єкт,
+// приховати внутрішню реалізацію об'єкта і надати доступ
+// лише до публічних методів і властивостей
+
+// Визначення налаштування властивості
+// Це вбудовані функції, які використовуються для налаштування
+// властивості об'єкта
+// Object.defineProperty(obj, prop, descriptor)
+// Object.defineProperties(obj, props)
+
+// // Прототип
+// const Animal = {
+//   name: "Тварини",
+//   voice: "Звук",
+//   say() {
+//     console.log(`${this.name} каже ${this.voice}`); // Виведе: Бобік каже Гав
+//   },
+// };
+// // Створення об'єкта з прототипом
+// const dog = Object.create(Animal);
+
+// dog.name = "Бобік";
+// dog.voice = "Гав";
+
+// Object.defineProperty(dog, "age", {
+//   set(value) {
+//     this._age = value * 2;
+//   },
+//   get() {
+//     return `${this._age || 0} років`;
+//   },
+// });
+// console.log(dog.age); // Виведе: 0 років
+// dog.age = 15;
+// console.log(dog.age); // Виведе: 30 років
+// delete dog.age;
+// console.log(dog.age); // Виведе: 30 років
+
+// Object.defineProperty(dog, "location", {
+//   value: "Ukraine",
+
+//   writable: true, // Якщо прибрати це, не можна буде змінювати
+//   enumerable: true, // Якщо прибрати це, не буде відображатись в об'єкті
+//   configurable: true, // Якщо прибрати це, не можна буде видалити локацію
+// });
+
+// console.log(dog.location); // Виведе: Ukraine
+
+// // delete dog.location;
+
+// // console.log(dog.location); // Виведе: undefined
+
+// console.log(Object.keys(dog)); // Виведе: [ 'name', 'voice', '_age', 'location' ]
+
+// Отримати налаштування властивості
+// Це вбудовані функції, які повертаються налаштування
+// властивості об'єкта за заданим ім'ям
+// Object.getOwnPropertyDescriptor(obj, prop)
+// Object.getOwnPropertyDescriptors(obj)
+
+// Перевірка властивості об'єкта
+// Це вбудована функція, яка перевіряє, чи властивість належить об'єкту,
+// а не успадкованою з його прототипу
+// .hasOwnProperty(prop)
+
+// ПОЛІМОРФІЗМ
+// Поліморфізм (Polymorphism) -- це принцип ООП, який дозволяє
+// різним об'єктам мати однакові методи, які будуть виконувати різні дії
+
+// const Tag = {
+//   render() {
+//     return `<>${value}<>`;
+//   },
+// };
+
+// const Button = Object.create(Tag);
+
+// Button.render = function (value = "") {
+//   return `<button style="${this.style}"> ${value} <button>`;
+// };
+
+// const mainButton = Object.create(Button, {
+//   style: {
+//     value: "background: red",
+//     writable: true,
+//   },
+// });
+
+// console.log(mainButton.render("Click")); // Виведе: <button style="background: red"> Click <button>
+
+// const Input = Object.create(Tag);
+
+// Input.render = function () {
+//   return `<input placeholder="${this.placeholder}" style="${this.style}"/> `;
+// };
+
+// const loginInput = Object.create(Input, {
+//   style: {
+//     value: "border: 1px solid red",
+//     writable: true,
+//   },
+//   placeholder: {
+//     value: "Login...",
+//   },
+// });
+
+// console.log(loginInput.render()); // Виведе: <input placeholder="Login..." style="border: 1px solid red"/>
+
+// const ServerRequest = {
+//   data: null,
+//   getData() {
+//     ///...
+//   },
+//   render() {
+//     this.data = this.getData();
+//     return `...`;
+//   },
+// };
+
+// АБСТРАКЦІЯ
+// Абстракція (Abstraction) -- це принцип ООП,
+// який дозволяє визначати загальні властивості
+// та методи об'єктів, щоб потім їх використовувати
+
+// const Tag = {
+//   render() {
+//     return `<>${value}<>`;
+//   },
+//   className: null,
+// };
+
+// const Button = Object.create(Tag);
+
+// Button.render = function (value = "") {
+//   return `<button class= "${this.className}" style="${this.style}"> ${value} <button>`;
+// };
+
+// const mainButton = Object.create(Button, {
+//   style: {
+//     value: "background: red",
+//     writable: true,
+//   },
+//   className: {
+//     value: "my-button",
+//   },
+// });
+
+// console.log(mainButton.render("Click")); // Виведе: <button style="background: red"> Click <button>
+// console.log(mainButton.className); // Виведе: my-button
+
+// const Input = Object.create(Tag);
+
+// Input.render = function () {
+//   return `<input placeholder="${this.placeholder}" style="${this.style}"/> `;
+// };
+
+// const loginInput = Object.create(Input, {
+//   style: {
+//     value: "border: 1px solid red",
+//     writable: true,
+//   },
+//   placeholder: {
+//     value: "Login...",
+//   },
+// });
+
+// console.log(loginInput.render()); // Виведе: <input placeholder="Login..." style="border: 1px solid red"/>
+// console.log(loginInput.className); // Виведе: null
+
+// const ServerRequest = {
+//   data: null,
+//   getData() {
+//     ///...
+//   },
+//   render() {
+//     this.data = this.getData();
+//     return `...`;
+//   },
+// };
+
+// const Page = {
+//   components: [],
+//   path: "/.../.../...",
+//   render() {
+//     //..
+//   },
+// };
+
+// Переваги ООП
+
+// ** Модульністью
+// ООП дозволяє поділити програму на модулі (об'єкти), що полегшує
+// розробку і підтримку коду
+
+// ** Повторне використання
+// Завдяки наслідуванню і поліморфізму, можна повторно використовувати код,
+// написаний раніше
+
+// ** Розширбваність
+// За допомогою наслідування можна легко розширювати
+// функціональність програми, додаючи нові об'єкти
+// та замінюючи вже існуючі
+
+// ** Інкапсуляція і захист даних
+// Інкапсуляція дозволяє приховати внутрішню реалізацію об'єкта і надати
+// доступ лише до публічних методів і властивостей
+
