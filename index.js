@@ -4743,3 +4743,230 @@
 // Інкапсуляція дозволяє приховати внутрішню реалізацію об'єкта і надати
 // доступ лише до публічних методів і властивостей
 
+// Урок 30
+// ФУНКЦІЯ - КОНСТРУКТОР
+
+// Що таке функція -- це спеціальна функція яка
+// викликається за допомогою оператора "new" і використовується
+// для створення нового об'єкта
+
+// Синаксичний цукор (syntactic sugar) -- це спрощена синтаксична конструкція,
+// яка не вносить нового функціоналу, але полегшує читання, написання або розуміння коду
+// Функція-конструктор є синтаксичним цукром для використання Object.create()
+// для створення нових об'єктів з встановленим прототипом
+
+// const User = {
+//   login: null,
+//   password: null,
+//   age: null,
+//   role: null,
+// };
+
+// function createUser({ login, password, isAdmin }) {
+//   return Object.create(User, {
+//     login: {
+//       value: login,
+//     },
+//     password: {
+//       value: password,
+//     },
+//     role: {
+//       value: isAdmin ? "Admin" : "User",
+//     },
+//     verify: {
+//       value(password) {
+//         return this.password === password;
+//       },
+//     },
+//   });
+// }
+// const testData = { login: "IVAN", password: "123qwe342" };
+// const testUser = createUser(testData);
+
+// console.log(testUser.login); // Виведе: IVAN
+
+// // ===================
+
+// const registerData = { login: "IVAN", password: "123qwe342" };
+
+// const user = createUser(registerData);
+
+// console.log(user.login); // Виведе: IVAN
+// console.log(user.password); // Виведе: 123qwe342
+// console.log(user.verify("trewq")); // Виведе: false
+
+// // ===================
+
+// const adminData = { login: "IVAN", password: "123qwe342", isAdmin: true };
+
+// const admin = createUser(adminData);
+// console.log(admin.password); // Виведе:123qwe342
+
+//=========
+
+// Технічно, функції-конструктори -- це звичайні функції.
+// Однак є дві загальні домовленості:
+
+// 1. Ім'я функції-конструктора повинно починатися з великої літери.
+// 2. Функції-конструктори повинні виконуватися лише з оператором "new"
+
+// function User({ login = null, password = null, isAdmin = null, age = 0 }) {
+//   this.login = login;
+//   this.password = password;
+//   this.role = isAdmin ? "Admin" : "User";
+//   this.age = age;
+
+//   this.verify = function (password) {
+//     return this.password === password;
+//   };
+// }
+
+// const registerData = { login: "IVAN", password: "123qwe342" };
+
+// const user = new User(registerData);
+
+// console.log(user.login); // Виведе: IVAN
+
+// const adminData = { login: "IVAN", password: "123qwe342", isAdmin: true };
+
+// const admin = new User(adminData);
+// console.log(admin.password); // Виведе:123qwe342
+
+// function UserAdmin({ login = null, password = null, isAdmin = null, age = 0 }) {
+//     this.login = login;
+//     this.password = password;
+//     this.role = isAdmin ? "Admin" : "User";
+//     this.age = age;
+
+//     this.verify = function (password) {
+//       return this.password === password;
+//     };
+// }
+
+// Коли функція виконується з new, відбуваються наступні кроки:
+// 1. Сворюється новий порожній об'єкт, якому присвоюється this
+// 2. Виконується тіло функції. Зазвичай воно модифікує this,
+// додає до нього нові властивостні
+// 3. Повертається значення this
+
+// Якщо у нас є багато рядків коду, які створюють єдиний складний об'єкт,
+// ми можемо обернути їх у функці-конструктор, яка одразу буде викликана, таким чином:
+// створити функцію і негайно викликати її за допомогою new
+// let user = new function() {
+//     this.name = "Джон";
+//     this.isAdmin = false;
+//     // ...інший код для створення користувача
+//     // можливо складна логіка та інструкції
+//     // локальні змінні тощо
+//     };
+
+// Зазвичай конструктори не мають інструкції return
+// Їх завдання - записати усе необхідне в this, яке автоматично стане результатом.
+// Але якщо є існструкція return, то застосовується просте правило:
+// ** Якщо return викликається з об'єктом, тоді замість this буде повернено це об'єкт
+// ** Якщо return викликається з примітивом, примітив ігнорується
+// Інакше кажучи, return з об'єктом повертає цей об'єкт, у всіх інших випадках повертає this
+
+// У наступному прикладі return перезаписує this, повертаючи обєкт:
+// function BigUser() {
+
+//     this.name = "Джон";
+
+//     return { name: "Ґодзілла" }; // <-- повертає цей об’єкт
+//     }
+
+//     alert( new BigUser().name ); // Ґодзілла, отримали цей об’єкт
+
+// Перевірка на наявність new
+// Це спеціальна змінна, яка містить посилання на коструктор, який був
+// викликаний за допомогою оператора new, дозволяючи перевірити,
+// чи функція була викликана за допомогою new чи без нього
+// new.target
+
+// function User() {
+//     alert(new.target);
+//     }
+
+//     // виклик без "new":
+//     User(); // undefined
+
+//     // виклик з "new":
+//     new User(); // function User { ... }
+
+// Також ця змінна може перенаправляти виклик функції до
+// конструктора з оператором new, якщо виклик був здійснений
+// без нього.
+
+// Довжина функції
+// Це вбудована властивість, яка повертає кількість параметрів
+// length
+
+// Ім’я функції
+// Це вбудована властивість, яка містить ім'я функції.
+// name
+
+// Прототип функції
+// Це вбудована властивість, яка представляє доступ до прототипу
+// об'єкта, що створюється цією функцією
+// prototype
+
+// function Car(make, model, year) {
+//     this.make = make;
+//     this.model = model;
+//     this.year = year;
+//     }
+
+//     Car.prototype.getDetails = function() {
+//     return this.make + ' ' + this.model + ', ' + this.year;
+//     }
+
+//     var myCar = new Car('Toyota', 'Corolla', 2005);
+
+//     console.log(myCar.getDetails()); // Виведе: 'Toyota Corolla, 2005'
+
+// Застосування функції
+// Це вбудована функція яка використовується для виклику функції з
+// заданим контекстом і аргументом
+// apply(thisArg, argsArray)
+
+// function Animal(name) {
+//   this.name = name;
+// }
+
+// function Person(name, age) {
+//   Animal.call(this, [name]);
+//   this.age = age;
+// }
+
+// const user2 = new Person("Ivan", 32);
+
+// console.log(user2.name); // Введе:[ 'Ivan' ]
+
+// Прив'язка функції
+// Це вбудована функція, яка створює нову функцію
+// з прив'язаним контекстом і зпочатковими аргументами
+// bind(thisArg, arg1, arg2, ...argN)
+
+// Виклик функції
+// Це вбудована функція, яка викликає функцію з
+// прив'язаним контекстом і з початковими аргументами
+// call(thisArg, arg1, /* ... ,/* argN)
+
+// function Animal(name) {
+//   this.name = name;
+// }
+
+// function Person(name, age) {
+//   Animal.call(this, name);
+//   this.age = age;
+// }
+
+// const user2 = new Person("Ivan", 32);
+
+// console.log(user2.name); // Введе:Ivan
+
+// Перезапис вбудованих функцій
+// Ми також можемо перезаписати наявні вбудовані функції
+// на свої власні, в яких визначимо потрібний функціонал
+// valueOf() -- Повертає примітивне значення об'єкта
+// toString() -- Повертає рядкове представлення об'єкта
