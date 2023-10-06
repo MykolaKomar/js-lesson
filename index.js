@@ -4970,3 +4970,435 @@
 // на свої власні, в яких визначимо потрібний функціонал
 // valueOf() -- Повертає примітивне значення об'єкта
 // toString() -- Повертає рядкове представлення об'єкта
+
+// Урок 31
+// Класи
+
+// Клас (class) -- це спеціальна конструкція, яка є синтаксичним цукром
+// для функцій-конструкторів, та полегшує роботу зі створенням наслідування
+// наслідування об'єктів
+
+// Поля класу -- це методи та властивості класу
+
+// Створення класу
+// Для створення класу використовується наступена конструкція
+
+// class Ім'я {...}
+// Так само як функції, класи можуть бути визначені, передані,
+// повернуті, присвоєні всередині іншого  виразу
+
+// Cворення властивостей
+// Створення властивостей здійснюється так само
+// як створення змінних, але без ключових слів
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+// }
+
+// const user = new User();
+// console.log(user); // Виведе: User { login: null, password: null, age: null, role: null }
+
+// Створення методів
+// Створення методів здійснюється так само як в об'єкті,
+// але не потрібно вказувати кому (",")
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+
+//   isAdmin() {
+//     return this.role !== "Admin";
+//   }
+// }
+
+// const user = new User();
+// console.log(user.isAdmin()); // Виведе: true
+
+// Нюанс
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+
+//   isAdmin() {
+//     return this.role !== "Admin";
+//   }
+// }
+
+// const user = new User();
+// console.log(user.isAdmin()); // Виведе: true
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// verifyAdmin(user.isAdmin.bind(this));
+
+// Cтворення методів
+// Методи можна створювати за допомогою синтаксису створення
+// властивостей (полів класу) та стрілкових функцій,
+// це допоможе виправити проблеми з контекстом this
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+
+//   isAdmin = () => {
+//     return this.role === "Admin";
+//   };
+// }
+
+// const user = new User();
+// console.log(user.isAdmin()); // Виведе: true
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// verifyAdmin(user.isAdmin);
+
+// Статичні поля
+// Ключове слово "статично" (static) -- це ключове слово
+// яке використовується для створення сетодів та властивостей,
+// які будуть доступні лише в класі
+// static назва методу або властивості
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+
+//   isAdmin = () => {
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true
+//   };
+// }
+
+// const user = new User();
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(User.generateRandompassword()); // Виведе: true
+
+// Приватне поле
+// Приватне поле -- це метод або властивість, яка доступна лише
+// в середині реалізації класу і недоступна зовні
+// Для написання  використовується # перед назвою
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   role = null;
+
+//   #id = 1000;
+
+//   isAdmin = () => {
+//     console.log(this.#id);
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true;
+//   };
+// }
+
+// const user = new User();
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(user);
+// // Виведе: без id
+// // User {
+// //     login: null,
+// //     password: null,
+// //     age: null,
+// //     role: null,
+// //     isAdmin: [Function: isAdmin],
+// //     createAdminUser: [Function: createAdminUser]
+// //   }
+
+// Геттери та Сеттери
+// Ключові слова "геттер" та "сеттер" -- це ключові слова,
+// які створюють методи, які використовуються для отримання
+// (геттер) або встановлення (сеттер) значення властивості
+
+// Потрібно вказати get або set перед методом
+
+// class User {
+//   login = null;
+//   password = null;
+//   age = null;
+//   #role = null;
+
+//   #id = 1000;
+
+//   isAdmin = () => {
+//     console.log(this.#id);
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true;
+//   };
+
+//   get admin() {
+//     return this.#role === "Admin";
+//   }
+
+//   set admin(value) {
+//     this.#role !== "Admin";
+//   }
+// }
+
+// const user = new User();
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(user.admin); // Виведе: false
+// user.admin = true;
+
+// Конструктор
+// Конструктор -- це спеціальний метод в класах, який викликається
+// автоматично при створенні нового об'єкту
+// constructor (аргументи) {...}
+
+// class User {
+//   constructor(login, password) {
+//     this.login = login;
+//     this.password = password;
+//   }
+//   login = null;
+//   password = null;
+//   age = null;
+//   #role = null;
+
+//   #id = 1000;
+
+//   isAdmin = () => {
+//     console.log(this.#id);
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true;
+//   };
+
+//   get admin() {
+//     return this.#role === "Admin";
+//   }
+
+//   set admin(value) {
+//     this.#role !== "Admin";
+//   }
+// }
+
+// const user = new User("Ivan", "dfksdk4123");
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(user);
+// // Виведе:
+// // User {
+// //     login: 'Ivan',
+// //     password: 'dfksdk4123',
+// //     age: null,
+// //     isAdmin: [Function: isAdmin],
+// //     createAdminUser: [Function: createAdminUser]
+// //   }
+
+// Наслідування
+// Ключове слово "поширення" (extends) -- це ключове слово,
+// яке використовується для наслідування полів бутьківського
+// класу та передача їх в дитячий клас
+// class Назва extends Клас батька
+
+// Наслідування з конструктором
+// Для того, щоб наслідувати конструктор батьківського класу,
+// потрібно в методі constructor звернутись до спеціальної
+// змінної super, яка містить посилання на батьківський клас
+
+// class Person {
+//   constructor(name) {
+//     this.name = name;
+//   }
+//   test = () => {
+//     console.log("Hello world!", this.name);
+//   };
+// }
+
+// class User extends Person {
+//   constructor(login, password) {
+//     super(login);
+
+//     this.login = login;
+//     this.password = password;
+//   }
+//   login = null;
+//   password = null;
+//   age = null;
+//   #role = null;
+
+//   #id = 1000;
+
+//   isAdmin = () => {
+//     console.log(this.#id);
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true;
+//   };
+
+//   get admin() {
+//     return this.#role === "Admin";
+//   }
+
+//   set admin(value) {
+//     this.#role !== "Admin";
+//   }
+// }
+
+// const user = new User("Ivan", "dfksdk4123");
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(user.test()); // Виведе: Hello world! Ivan
+
+// Множинне наслідування
+// Для того, щоб наслідувати декілька інших батьківських
+// класі, потрібно використовувати функцію Object.assing()
+
+// Перевірка прототипу
+// instanceof -- це оператор, який перевіряє чи належить об'єкт
+// до певного класу. Він також враховує наслідування
+
+// Правопис конструкції: об'єкт instanceof клас
+
+// class Person {
+//   constructor(name) {
+//     this.name = name;
+//   }
+//   test = () => {
+//     console.log("Hello world!", this.name);
+//   };
+// }
+
+// class User extends Person {
+//   constructor(login, password) {
+//     super(login);
+
+//     this.login = login;
+//     this.password = password;
+//   }
+//   login = null;
+//   password = null;
+//   age = null;
+//   #role = null;
+
+//   #id = 1000;
+
+//   isAdmin = () => {
+//     console.log(this.#id);
+//     return this.role === "Admin";
+//   };
+
+//   createAdminUser = (login) => {
+//     return new User();
+//   };
+
+//   static generateRandompassword = () => {
+//     return true;
+//   };
+
+//   get admin() {
+//     return this.#role === "Admin";
+//   }
+
+//   set admin(value) {
+//     this.#role !== "Admin";
+//   }
+// }
+
+// const user = new User("Ivan", "dfksdk4123");
+
+// function verifyAdmin(fn) {
+//   const result = fn();
+//   if (!result) {
+//     throw new Error("Не адмін");
+//   }
+//   return true;
+// }
+
+// console.log(user instanceof User); // Виведе: true
