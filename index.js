@@ -5402,3 +5402,12 @@
 // }
 
 // console.log(user instanceof User); // Виведе: true
+
+// Практика JS1
+
+// Що таке CRUD?
+// CRUD (Create, Read, Update, Delete) -- це основні операції, які
+// можуть виконані над даними в програмах
+
+// Посилання на виконане CRUD_USER
+// https://github.com/MykolaKomar/js-crud
