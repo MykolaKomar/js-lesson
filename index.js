@@ -5411,3 +5411,683 @@
 
 // Посилання на виконане CRUD_USER
 // https://github.com/MykolaKomar/js-crud
+
+// Урок 32
+
+// ПАТЕРНИ ПРОГРАМУВАННЯ
+// 1 ЧАСТИНА
+
+// Патен програмування -- це загально визнане рішення для
+// типових проблем, що виникають під час розроюки програмного забезпечення
+
+// Це спеціальні прийоми, структури вбо алгоритми, які можна використовувати
+// для вирішення певних задач і поліпшення організацї коду
+
+// ------------------------------------------------------------------
+// Одиночка (Singleton) -- це патерн програмування, який забезпечує,
+// що клас має тільки один екземпляр і надає глобальну точку доступу до
+// цього екземпляра
+
+// Одиночка часто використовується в ситуаціях, коли потрібно обмежити
+// кількість екземплярів класу до одного, наприклад, при роботі
+// з налаштуваннями програми, з'єднанням до бази даних або кешуванням
+
+// class RecentPurchases {
+//   static #instance = null;
+
+//   constructor() {
+//     this.purchases = [];
+//   }
+
+//   static create() {
+//     if (!this.#instance) {
+//       this.#instance = new RecentPurchases();
+//     }
+
+//     return this.#instance;
+//   }
+
+//   add(item) {
+//     this.purchases.push(item);
+//   }
+
+//   get() {
+//     return this.purchases;
+//   }
+// }
+
+// const lastPurchaseList = RecentPurchases.create();
+
+// // ====
+
+// const lastPurchaseList2 = RecentPurchases.create();
+
+// console.log(lastPurchaseList === lastPurchaseList2); // Виведе: true
+
+// lastPurchaseList2.add("Телефон");
+// lastPurchaseList.add("Навушники");
+
+// console.log(lastPurchaseList.get()); // Виведе: [ 'Телефон', 'Навушники' ]
+
+// Теж саме тільки все через статичні методи static
+
+// class RecentPurchases {
+//   static #instance = null;
+
+//   static #purchases = [];
+
+//   static create() {
+//     if (!this.#instance) {
+//       this.#instance = new RecentPurchases();
+//     }
+
+//     return this.#instance;
+//   }
+
+//   static add(item) {
+//     this.#purchases.push(item);
+//   }
+
+//   static get() {
+//     return this.#purchases;
+//   }
+// }
+
+// RecentPurchases.create();
+
+// RecentPurchases.add("Телефон");
+// RecentPurchases.add("Навушники");
+
+// console.log(RecentPurchases.get()); // Виведе: [ 'Телефон', 'Навушники' ]
+
+// ------------------------------------------------------------------
+// Фабрика (Factory) -- це патерн програмування, який надає загальний клас
+// для створення об'єктів, який враховує передані аргументи та вирішує
+// який клас повинен мати об'єкт при створенні
+
+// Фабрика допомогає нам уникнути прямої залежності від конкретних класів
+// і спрощує процес створення об'єктів у нашій програмі. Вона забезпечує
+// гнучкість та розширюваність, оскільки нам достатньо додати новий підклас
+// і фабрика вже зможе створювати об'єкт цього нового типу
+
+// **вик. Коли потрібно створити об'єкт але точний тип цього об'єкта може
+//        залежати від умов або конфігурації
+
+// class Button {
+//   constructor({ text, color }) {
+//     this.text = text;
+//     this.color = color;
+//   }
+
+//   render() {
+//     return `<button class="color:${this.color};">${this.text}</button>`;
+//   }
+// }
+
+// class IconButton {
+//   constructor({ icon, color }) {
+//     this.icon = icon;
+//     this.color = color;
+//   }
+
+//   render() {
+//     return `<button class="color:${this.color};">${this.icon}</button>`;
+//   }
+// }
+
+// class ButtonFactory {
+//   static TYPE = {
+//     BASIC: "basic",
+//     ICON: "icon",
+//   };
+
+//   static createButton(type, options) {
+//
+//     switch (type) {
+//       case this.TYPE.BASIC:
+//         return new Button(options);
+//       case this.TYPE.ICON:
+//         return new IconButton(options);
+//       default:
+//         throw new Error(`Такого типу унопки не існує: ${type}`);
+//     }
+//   }
+// }
+
+// const myIconButton = ButtonFactory.createButton(ButtonFactory.TYPE.ICON, {
+//   color: "red",
+//   icon: "/icon/my-icon.svg",
+// });
+
+// console.log(myIconButton); //Виведе: IconButton { icon: '/icon/my-icon.svg', color: 'red' }
+
+// ** ТЕ САМЕ з іншою логікою
+
+// class Button {
+//   constructor({ text, color }) {
+//     this.text = text;
+//     this.color = color;
+//   }
+
+//   render() {
+//     return `<button class="color:${this.color};">${this.text}</button>`;
+//   }
+// }
+
+// class IconButton {
+//   constructor({ icon, color }) {
+//     this.icon = icon;
+//     this.color = color;
+//   }
+
+//   render() {
+//     return `<button class="color:${this.color};">${this.icon}</button>`;
+//   }
+// }
+
+// class ButtonFactory {
+//   static TYPE = {
+//     BASIC: "basic",
+//     ICON: "icon",
+//   };
+
+//   static createButton(type, options) {
+//     if (options.icon) {
+//       return new IconButton(options);
+//     }
+
+//     if (options.text) {
+//       return new Button(options);
+//     }
+
+//     throw new Error(`Такого типу унопки не існує: ${type}`);
+//   }
+// }
+
+// const myIconButton = ButtonFactory.createButton(ButtonFactory.TYPE.ICON, {
+//   color: "red",
+//   icon: "/icon/my-icon.svg",
+// });
+
+// console.log(myIconButton); //Виведе: IconButton { icon: '/icon/my-icon.svg', color: 'red' }
+
+// ------------------------------------------------------------------
+// Спостерігач (Observer) -- це патерн програмування, який визначає залежність
+// "один-багато" між об'єктами, так що зміна стану одного об'єкта призводить до
+// атоматичного оновлення всіх залежних об'єктів
+
+// Патерн Спостерігач допомагає уникнути прямих залежностей між об'єктами
+// спрощує комунікацію між ними і забезпечує більш гнучку структуру програми
+
+//  **вик. Коли потрібно реалізувати механізм сповіщення про зміну в одному
+//    об'єкті і автоматично оновлювати інші об'єкти, які залежать від нього
+
+// class User {
+//   constructor(email) {
+//     this.email = email;
+//   }
+
+//   sendEmail(message) {
+//     console.log(`Відправка email ${this.email} повідомлення: ${message}`);
+//   }
+// }
+
+// class Video {
+//   constructor(name) {
+//     this.name = name;
+//   }
+// }
+
+// class Channel {
+//   constructor(name) {
+//     this.name = name;
+//     this.subscribers = [];
+//   }
+
+//   subscribe(user) {
+//     // Підписка на канал
+//     this.subscribers.push(user);
+//   }
+
+//   unsubscribe(user) {
+//     // Відписка від каналу
+//     this.subscribers = this.subscribers.filter((sub) => sub !== user);
+//   }
+
+//   createVideo(name) {
+//     // Створення нового відео
+//     const video = new Video(name);
+//     this.sendNotify(video);
+//   }
+
+//   sendNotify(video) {
+//     // Відправка повідомлення підписникам про нове відео
+//     this.subscribers.forEach((subscriber) => {
+//       subscriber.sendEmail(
+//         `Нове відео "${video.name}" на YouTube каналі ${this.name}!`
+//       );
+//     });
+//   }
+// }
+
+// const channel = new Channel("IT Brains");
+
+// const user1 = new User("john@gmail.com");
+// const user2 = new User("jane@gmail.com");
+// const user3 = new User("alice@gmail.com");
+
+// channel.subscribe(user1);
+// channel.subscribe(user2);
+// channel.subscribe(user3);
+
+// channel.createVideo("Урок про HTML");
+
+// // Виведе:
+// // Відправка email john@gmail.com повідомлення: Нове відео "Урок про HTML" на YouTube каналі IT Brains!
+// // Відправка email jane@gmail.com повідомлення: Нове відео "Урок про HTML" на YouTube каналі IT Brains!
+// // Відправка email alice@gmail.com повідомлення: Нове відео "Урок про HTML" на YouTube каналі IT Brains!
+
+// channel.unsubscribe(user1);
+
+// channel.createVideo("Урок про CSS");
+
+// // Виведе:
+// // Відправка email jane@gmail.com повідомлення: Нове відео "Урок про CSS" на YouTube каналі IT Brains!
+// // Відправка email alice@gmail.com повідомлення: Нове відео "Урок про CSS" на YouTube каналі IT Brains!
+
+// ------------------------------------------------------------------
+// Декоратор (Decorator) -- це патерн програмування, який додає нову функціональність до існуючих,
+// об'єктів, не змінюючи їхньої структури. Іншими словами, він дозволяє розширити
+// функціональність об'єкта, не зміючи сам об'єкт
+
+// За допомогою декоратора можна додавати нові функції да об'єктів без змінення їх
+// внутрішньої реалізації. Це полегшує розширення функціональності коду та поліпшує його читабельність
+
+//  **вик. Коли потрібно додати додаткову функціональність
+//    до об'єкта без потреби змінювати його код
+
+// class Coffee {
+//   name = "Кава";
+
+//   cost = 10;
+
+//   cook() {
+//     console.log(`Приготування ${this.name}`);
+//     // Логіка приготування кавового напою
+//   }
+// }
+
+// class MilkDecorator {
+//   constructor(coffee, amount) {
+//     this.coffee = coffee;
+//     this.amount = amount;
+//   }
+
+//   get name() {
+//     return `${this.coffee.name}, з ${this.amount} мл молока`;
+//   }
+
+//   get cost() {
+//     const milkPrice = 0.05;
+//     return this.coffee.cost + milkPrice * this.amount;
+//   }
+
+//   cook() {
+//     console.log(`Приготування ${this.name}`);
+//     // Логіка приготування кави з молоком
+//   }
+// }
+
+// // Створення об'єкту базової кави
+// let coffee = new Coffee();
+// console.log(coffee.name); // Виведе:Кава
+// console.log(coffee.cost); // Виведе: 10
+// coffee.cook(); // Виведе: Приготування Кава
+
+// // Додавання декоратора молока до кави
+// let latteCoffee = new MilkDecorator(coffee, 300);
+// console.log(latteCoffee.name); // Виведе: Кава, з 300 мл молока
+// console.log(latteCoffee.cost); // Виведе: 25
+// latteCoffee.cook(); // Виведе: Приготування Кава, з 300 мл молока
+
+// ------------------------------------------------------------------
+// Мементо (Memento) -- це патерн програмування, який забезпечує
+// збереження стану об'єкта для подальшого відновлення.
+
+// Патерн Мементо дозваоляє забезпечити зручний та безпечний
+// механізм збереження та відновлення стану об'єкта
+
+//  **вик. Коли потрібно зберегти стан об'єкта і відновити
+//    його пізніше, зберігаючи приватні дані відповідно
+
+// class TextEditor {
+//   #text = "";
+
+//   set text(text) {
+//     this.#text = text;
+//     this.#save();
+//   }
+
+//   get text() {
+//     return this.#text;
+//   }
+
+//   #save() {
+//     Snapshot.create(this.text);
+//   }
+
+//   restore() {
+//     this.#text = Snapshot.restore().text;
+//   }
+// }
+
+// class Snapshot {
+//   constructor(text) {
+//     this.text = text;
+//   }
+
+//   static #snapshots = [];
+
+//   static create(text) {
+//     this.#snapshots.push(new Snapshot(text));
+//   }
+
+//   static restore() {
+//     this.#snapshots.pop();
+//     return this.#snapshots[this.#snapshots.length - 1];
+//   }
+// }
+
+// const editor = new TextEditor();
+
+// editor.text = "Це початковий текст";
+// editor.text = "Редагований текст";
+// editor.text = "Оновлений текст";
+// console.log("===");
+// console.log(editor.text); //Виведе: Оновлений текст
+// console.log("===");
+
+// editor.restore();
+// console.log(editor.text); //Виведе: Редагований текст
+
+// console.log("===");
+
+// editor.restore();
+// console.log(editor.text); //Виведе: Це початковий текст
+
+// ------------------------------------------------------
+// Ланцюжок відповідальності (Chain of Responsibility) -- це патерн
+// програмування, який дозволяє передвати запити послідовно через
+// ланцюжок обробників, кожен з яких може обробити або передати запит далі
+
+// Застосування ланцюжка відповідальності допомогає розділити
+// логіку обробки запиту на окремі компоненти, що спрощує
+// розробку та підтримку системи
+
+//  **вик. Коли потрібно реалізувати механізм обробки запитів з
+// можливістю автоматичного перехоплення та передачі запиту між обробниками
+
+// class AuthHandler {
+//   setNextHandler(handler) {
+//     this.nextHandler = handler;
+//     return handler;
+//   }
+
+//   login(user, password) {
+//     if (this.nextHandler) {
+//       return this.nextHandler.login(user, password);
+//     } else {
+//       return false;
+//     }
+//   }
+// }
+
+// class TwoFactorAuthHandler extends AuthHandler {
+//   login(user, password) {
+//     if (
+//       user === "john" &&
+//       password === "password" &&
+//       this.isValidTwoFactorCode()
+//     ) {
+//       console.log("Вхід дозволено з двофакторною автентифікацією");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+
+//   isValidTwoFactorCode() {
+//     return true;
+//   }
+// }
+
+// const handler = new TwoFactorAuthHandler();
+
+// handler.setNextHandler({
+//   login: (...arg) => {
+//     console.log(arg);
+//   },
+// });
+
+// handler.login("login", "password"); //Виведе: [ 'login', 'password' ]
+
+// handler.setNextHandler({
+//   login: (login, password) => {
+//     const result =
+//       login === "login" && password === "password"
+//         ? "Користувач увійшов в акаунт"
+//         : "Користувач не увійшов в акаунт";
+
+//     console.log(result);
+//     return result;
+//   },
+// });
+
+// handler.login("login", "password"); //Виведе: Користувач увійшов в акаунт
+
+// ЩЕЕ -------------------------------------------------------------------
+
+// class AuthHandler {
+//   setNextHandler(handler) {
+//     this.nextHandler = handler;
+//     return handler;
+//   }
+
+//   login(user, password) {
+//     if (this.nextHandler) {
+//       return this.nextHandler.login(user, password);
+//     } else {
+//       return false;
+//     }
+//   }
+// }
+
+// class TwoFactorAuthHandler extends AuthHandler {
+//   login(user, password) {
+//     if (
+//       user === "john" &&
+//       password === "password" &&
+//       this.isValidTwoFactorCode()
+//     ) {
+//       console.log("Вхід дозволено з двофакторною автентифікацією");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+
+//   isValidTwoFactorCode() {
+//     return true;
+//   }
+// }
+
+// class RoleHandler extends AuthHandler {
+//   login(user, password) {
+//     if (user === "guest") {
+//       console.log("Вхід дозволено з роллю гостя");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+// }
+
+// class CredentialsHandler extends AuthHandler {
+//   login(user, password) {
+//     if (user === "admin" && password === "admin123") {
+//       console.log("Вхід дозволено за логіном та паролем");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+// }
+
+// const handler = new TwoFactorAuthHandler();
+
+// const handler2 = new CredentialsHandler();
+
+// handler2.setNextHandler(new RoleHandler());
+
+// handler.setNextHandler(handler2);
+
+// handler.login("admin", "admin123"); //Виведе: Вхід дозволено за логіном та паролем
+
+// handler.login("guest", "admin123"); //Виведе: Вхід дозволено з роллю гостя
+
+// ЩЕЕ -------------------------------------------------------------------
+
+// class AuthHandler {
+//   setNextHandler(handler) {
+//     this.nextHandler = handler;
+//     return handler;
+//   }
+
+//   login(user, password) {
+//     if (this.nextHandler) {
+//       return this.nextHandler.login(user, password);
+//     } else {
+//       return false;
+//     }
+//   }
+// }
+
+// class TwoFactorAuthHandler extends AuthHandler {
+//   login(user, password) {
+//     if (
+//       user === "john" &&
+//       password === "password" &&
+//       this.isValidTwoFactorCode()
+//     ) {
+//       console.log("Вхід дозволено з двофакторною автентифікацією");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+
+//   isValidTwoFactorCode() {
+//     return true;
+//   }
+// }
+
+// class RoleHandler extends AuthHandler {
+//   login(user, password) {
+//     if (user === "guest") {
+//       console.log("Вхід дозволено з роллю гостя");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+// }
+
+// class CredentialsHandler extends AuthHandler {
+//   login(user, password) {
+//     if (user === "admin" && password === "admin123") {
+//       console.log("Вхід дозволено за логіном та паролем");
+//       return true;
+//     } else {
+//       return super.login(user, password);
+//     }
+//   }
+// }
+
+// class HandlerBuilder {
+//   constructor() {
+//     this.firstHandler = null;
+//     this.lastHandler = null;
+//   }
+
+//   add(handler) {
+//     if (!this.firstHandler) {
+//       this.firstHandler = handler;
+//       this.lastHandler = handler;
+//     } else {
+//       this.lastHandler.setNextHandler(handler);
+//       this.lastHandler = handler;
+//     }
+//     return this;
+//   }
+
+//   create() {
+//     return this.firstHandler;
+//   }
+// }
+
+// const handlerBuilder = new HandlerBuilder();
+
+// const handler = handlerBuilder
+//   .add(new CredentialsHandler())
+//   .add(new TwoFactorAuthHandler())
+//   .add(new RoleHandler())
+//   .create();
+
+// handler.login("admin", "admin123"); //Виведе: Вхід дозволено за логіном та паролем
+// handler.login("john", "password"); //Виведе: Вхід дозволено з двофакторною автентифікацією
+// handler.login("guest", "guest123"); //Виведе: Вхід дозволено з роллю гостя
+// handler.login("user", "password"); //Виведе: Вхід заборонено
+
+// --------------------------------------------------------------------------------------------
+// Міст (Bridge) -- це патерн програмування, який дозволяє розмістити
+// абстракцію і реалізувати в окремі класи, дозволяючи їм мати незалежний функціонал
+
+// Коли ми говоримо про "абстракцію", ми маємо на увазі абстрактний клас
+// який визначає загальні методи та функціональність
+
+// class User {
+//   constructor(name, messenger) {
+//     this.name = name;
+//     this.messenger = messenger;
+//   }
+
+//   sendMessage(message) {
+//     const formattedMessage = this.formattedMessage(message);
+//     this.messenger.sendMessage(formattedMessage);
+//   }
+
+//   formattedMessage(message) {
+//     return `[${this.name}]: ${message}`;
+//   }
+// }
+
+// // через СМС
+
+// class SMSMessenger {
+//   static sendMessage(message) {
+//     console.log(`Відправлено SMS: ${message}`);
+//   }
+// }
+
+// // через емайл
+// class EmailMessenger {
+//   static sendMessage(message) {
+//     console.log(`Відправлено Email: ${message}`);
+//   }
+// }
+
+// const john = new User("John", SMSMessenger);
+// const alex = new User("Alex", EmailMessenger);
+
+// john.sendMessage("Привіт!"); // Виведе: Відправлено SMS: [John]: Привіт!
+// alex.sendMessage("Привіт!"); // Виведе: Відправлено Email: [Alex]: Привіт!
