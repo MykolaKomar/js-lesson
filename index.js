@@ -6091,3 +6091,600 @@
 
 // john.sendMessage("Привіт!"); // Виведе: Відправлено SMS: [John]: Привіт!
 // alex.sendMessage("Привіт!"); // Виведе: Відправлено Email: [Alex]: Привіт!
+
+// ============================================================================================
+// Урок 33
+// Патерни програмування
+//  2 частина
+
+// Композит (Composite) -- це патерн програмування, який дозволяє створювати структуру
+// об'єктів у вигляді дерева, де кожен об'єкт може бути окремим елементом або групою
+// об'єктів. Ця структура називається "деревоподібною" через ієрархію "один-багато"
+
+//  **вик. Коли потрібно працювати з деревоподібною структурою об'єктів, де
+//    об'єкти та групи об'єктів можуть бути оброблені однаковим чином.
+//    Наприклад, уявімо структуру, де ми маємо дерево, яке складається з гілок
+//    які своєю чергою мають листя. Кожна гілка може містити інші гілки або листя
+//    За допомогою патерна "Композит" ми можемо обробляти кожен елемент дерева
+//    однаковим чином, ннезалежно від того, чи це окремий листок, чи це ціла  гілка
+//    з підгілками та листям
+
+// // До давати до відео багато коментарів!!!!!
+// class Comment {
+//   constructor(text) {
+//     this.text = text;
+//   }
+
+//   display() {
+//     console.log(`- Коментар: ${this.text}`);
+//   }
+// }
+
+// class Video {
+//   comments = [];
+
+//   constructor(title) {
+//     this.title = title;
+//   }
+
+//   addComment(comment) {
+//     this.comments.push(comment);
+//   }
+
+//   removeComment(comment) {
+//     const index = this.comments.indexOf(comment);
+//     if (index !== -1) {
+//       this.comments.splice(index, 1);
+//     }
+//   }
+
+//   display() {
+//     console.log(`Відео: ${this.title}`);
+
+//     for (const comment of this.comments) {
+//       comment.display();
+//     }
+//   }
+// }
+
+// const video = new Video("Навчальне відео");
+
+// video.addComment(new Comment("Дуже корисне відео"));
+
+// video.addComment(new Comment("Дякую за чудовий матеріал!"));
+// video.display();
+// // Виведе:   // Відео: Навчальне відео
+// // - Коментар: Дуже корисне відео
+// // - Коментар: Дякую за чудовий матеріал!
+
+// До давати до коментарів відповіді!!!!!
+// class Composite {
+//   comments = [];
+
+//   addComment(comment) {
+//     this.comments.push(comment);
+//   }
+
+//   removeComment(comment) {
+//     const index = this.comments.indexOf(comment);
+//     if (index !== -1) {
+//       this.comments.splice(index, 1);
+//     }
+//   }
+// }
+
+// class Comment extends Composite {
+//   constructor(text) {
+//     super();
+//     this.text = text;
+//   }
+
+//   display() {
+//     console.log(`- Коментар: ${this.text}`);
+
+//     for (const comment of this.comments) {
+//       comment.display();
+//     }
+//   }
+// }
+
+// class Video extends Composite {
+//   constructor(title) {
+//     super();
+//     this.title = title;
+//   }
+
+//   display() {
+//     console.log(`Відео: ${this.title}`);
+
+//     for (const comment of this.comments) {
+//       comment.display();
+//     }
+//   }
+// }
+
+// const video = new Video("Навчальне відео");
+
+// video.addComment(new Comment("Дуже корисне відео"));
+
+// video.addComment(new Comment("Дякую за чудовий матеріал!"));
+// video.comments[0].addComment(new Comment("Відповідь: Згоден!"));
+
+// video.display();
+// // Виведе:   Відео: Навчальне відео
+// // - Коментар: Дуже корисне відео
+// // - Коментар: Відповідь: Згоден!
+// // - Коментар: Дякую за чудовий матеріал!
+
+// ---------------------------------------------------------------------
+// Муха(Flyweight) -- це патерн програмування, основна ідея якого
+// полягає в тому, щоб спільно використовувати об'єкт-одиночка замість
+// створення окремих унікальних об'єктів для кожного випадку використання
+
+//  ** вик. Коли потрібно економити пам'ять, оптимізуючи велику кількість
+//     дрібних об'єктів, використовуючи спільні "легкі" частини.
+
+// class Category {
+//   static #categories = {};
+
+//   constructor(name) {
+//     this.name = name;
+//   }
+
+//   static create(name) {
+//     if (!this.#categories[name]) {
+//       this.#categories[name] = new Category(name);
+//     }
+//     return this.#categories[name];
+//   }
+// }
+
+// class Product {
+//   constructor(name, category) {
+//     this.name = name;
+//     this.category = category;
+//   }
+
+//   display() {
+//     console.log(`Product: ${this.name}, Category: ${this.category.name}`);
+//   }
+// }
+
+// const electronsics = Category.create("Electronics");
+// const books = Category.create("Books");
+// const electronsics2 = Category.create("Electronics");
+
+// console.log(electronsics, books, electronsics2);
+// // Виведе: Category { name: 'Electronics' } Category { name: 'Books' } Category { name: 'Electronics' }
+// console.log(electronsics === electronsics2); // Виведе: true
+
+// const product1 = new Product("Laptop", electronsics)
+// const product2 = new Product("Headphones", electronsics)
+// const product3 = new Product("book Title", books)
+// const product4 = new Product("Smartphone", electronsics2)
+
+// product1.display() // Виведе: Product: Laptop, Category: Electronics
+// product2.display() // Виведе: Product: Headphones, Category: Electronics
+// product3.display() // Виведе: Product: book Title, Category: Books
+// product4.display() // Виведе: Product: Smartphone, Category: Electronics
+
+// console.log(product1.category === product4.category); // Виведе: true
+
+// ----------------------------------------------------------------------------
+// Шаблонний метод (Template Method) -- це патерн програмування, який визначає
+// загальну структуру алгоритму, залишаючи певні кроки реалізації підкласам.
+// Клас-шаблон визначає основну логіку алгоритму, а підкласти можуть змінювати
+// або розширювати окремі кроки
+//   ** вик. Коли потрібно визначити загальну структуру алгоритму, але
+//      дозволити підкласам змінювати деякі кроки або додавати нові
+
+// class CoffeMachine {
+//   prepareCoffee() {
+//     this.boilWater();
+//     this.grindCoffeeBean();
+//     this.#brewCoffe();
+//     this.pourIntoCup();
+//     this.addIngredients();
+//     this.serveCoffe();
+//   }
+
+//   boilWater() {
+//     console.log("Boiling water...");
+//   }
+
+//   grindCoffeeBean() {
+//     console.log("Griding coffee beans...");
+//   }
+
+//   #brewCoffe() {
+//     console.log("Brewing coffee...");
+//   }
+
+//   pourIntoCup() {
+//     console.log("Puring coffee into cup...");
+//   }
+
+//   addIngredients() {
+//     // Цей метод залишається пустим і може бути перевизначений у підкласах
+//   }
+
+//   serveCoffe() {
+//     console.log("Coffee served!");
+//   }
+// }
+
+// class LatteMachine extends CoffeMachine {
+//   addIngredients() {
+//     console.log("Adding milk to make a latte...");
+//   }
+// }
+
+// class CappuccinoMachine extends CoffeMachine {
+//   addIngredients() {
+//     console.log(
+//       "Adding milk and sprinkle of cocoa powder to make a cappuccino..."
+//     );
+//   }
+// }
+
+// const latteMachine = new LatteMachine();
+// latteMachine.prepareCoffee(); // Виведе:
+// // Boiling water...
+// // Griding coffee beans...
+// // Brewing coffee...
+// // Puring coffee into cup...
+// // Adding milk to make a latte...
+// // Coffee served!
+
+// const cappuccinoMachine = new CappuccinoMachine();
+// cappuccinoMachine.prepareCoffee(); // Виведе:
+// // Boiling water...
+// // Griding coffee beans...
+// // Brewing coffee...
+// // Puring coffee into cup...
+// // Adding milk and sprinkle of cocoa powder to make a cappuccino...
+// // Coffee served!
+
+// ------------------------------------------------------------------------------------
+// Відвідувач (Visitor) -- це патерн програмування, який дозволяє додавати нові
+// операції до групи об'єктів, не змінюючи самі об'єкти. Відвідувач розділяє
+// алгоритм від представлення об'єктів, що дозволяє додавати нові операції,
+// не змінюючи класи цих об'єктів.
+
+//   **вик. Коли потрібно виконувати операції над групою об'єктів різними
+//     способами, але не хочете залежати від конткретних класів цих об'єктів
+
+// class TextFile {
+//   constructor(name, content) {
+//     this.name = name;
+//     this.content = content;
+//   }
+// }
+
+// class ImageFile {
+//   constructor(name, size) {
+//     this.name = name;
+//     this.size = size;
+//   }
+// }
+
+// class VideoFile {
+//   constructor(name, duration) {
+//     this.name = name;
+//     this.duration = duration;
+//   }
+// }
+
+// class TextEditor {
+//   files = [];
+
+//   addFile(file) {
+//     this.files.push(file);
+//   }
+
+//   readTextFile(file) {
+//     console.log(
+//       `Text file: ${file.name}, Size: ${file.content.length} characters`
+//     );
+//   }
+
+//   readImageFile(file) {
+//     console.log(`Image file: ${file.name}, Size: ${file.size} KB`);
+//   }
+
+//   readVideoFile(file) {
+//     console.log(`Video file: ${file.name}, Duration: ${file.duration} minutes`);
+//   }
+
+//   readFile() {
+//     for (const file of this.files) {
+//       if (file instanceof TextFile) {
+//         this.readTextFile(file);
+//       } else if (file instanceof ImageFile) {
+//         this.readImageFile(file);
+//       } else if (file instanceof VideoFile) {
+//         this.readVideoFile(file);
+//       }
+//     }
+//   }
+// }
+
+// const textEditor = new TextEditor();
+
+// const textFile = new TextFile("document.txt", "Lorem ipsum dolor sit amet.");
+// const imageFile = new ImageFile("image.jpg", 1024);
+// const videoFile = new VideoFile("video.mp4", 60);
+
+// textEditor.addFile(textFile);
+// textEditor.addFile(imageFile);
+// textEditor.addFile(videoFile);
+
+// console.log(textEditor.files);
+
+// textEditor.readFile(); // Виведе: для кожного файлу свій console.log()
+
+// -----------------------------------------------------------------------------
+// Адаптер (Adapter) -- це патерн програмування, який дозволяє об'єктам з інтерфейсом
+// несумісним з іншими об'єктами праціювати разом, перетворюючи інтерфейс
+// одного об'єкта на інтерфейс, очікуваний іншим об'єктом.
+
+//   **вик. Коли потрібно забезпечити співпрацю несумісних об'єктів,
+//     які мають різні інтерфейси.
+
+// Система електронних платежів з власним АРІ
+// class ElectronicPaymentSystem {
+//   makePayment(amount) {
+//     const convertedAmount = this.convertAmount(amount);
+//     console.log(`Making electronic payment: $${convertedAmount}`);
+//   }
+
+//   convertAmount(amount) {
+//     // Логіка конвертації суми платежу
+//     return amount * 1.2; // Припустимо, що необхідна конвертація у відсотках
+//   }
+// }
+
+// class OtherPaymentSystem {
+//   submit(amount) {
+//     console.log(`Submitting payment request: $${amount}`);
+//   }
+// }
+
+// class PaymentAdapter {
+//   constructor(paymentSystem) {
+//     this.paymentSystem = paymentSystem;
+//   }
+
+//   makePayment(amount) {
+//     const convertedAmount = this.convertAmount(amount);
+//     this.paymentSystem.submit(convertedAmount);
+//   }
+
+//   convertAmount(amount) {
+//     return amount * 1.2;
+//   }
+// }
+
+// class Order {
+//   constructor(amount) {
+//     this.amount = amount;
+
+//     if (amount < 100) {
+//       this.paymentSystem = new PaymentAdapter(new OtherPaymentSystem());
+//     } else {
+//       this.paymentSystem = new ElectronicPaymentSystem();
+//     }
+//   }
+
+//   makePayment() {
+//     return this.paymentSystem.makePayment(this.amount);
+//   }
+// }
+
+// const order1 = new Order(1000);
+// order1.makePayment(); // Виведе: Making electronic payment: $1200
+
+// const order2 = new Order(10);
+// order2.makePayment(); // Виведе: Submitting payment request: $12
+
+// const electronicPaymentSystem = new ElectronicPaymentSystem();
+// electronicPaymentSystem.makePayment(100); // Виведе: Making electronic payment: $120
+
+// -----------------------------------------------------------------------------
+// Стратегія (Strategy) -- це патерн програмування, який дозволяє визначати
+// різні алгоритми та забезпечує можливість обміну їх під час виконання програми
+
+//   **вик. Коли потрібно використовувати різні алгоритми з можливістю зміни
+//     алгоритму в процесі роботи
+
+// class ShoppingCart {
+//   constructor(discountStrategy) {
+//     this.discountStrategy = discountStrategy;
+//     this.items = [];
+//   }
+
+//   addItem(item) {
+//     this.items.push(item);
+//   }
+
+//   calculateTotalPrice() {
+//     // або
+//     // let totalPrice = 0;
+//     // for (const item of this.items) {
+//     //   totalPrice += item.price;
+//     // }
+//     // const finalPrice = totalPrice;
+//     // return finalPrice;
+//     // або
+
+//     const price = this.items.reduce((acc, item) => acc + item.price, 0);
+
+//     return price - this.discountStrategy.calculateDiscount(price);
+//   }
+// }
+
+// class DiscountStrategy {
+//   calculateDiscount(price) {
+//     return price;
+//   }
+// }
+
+// // Стратегія знижки для звичайних клієнтів
+// class RegularDiscountStrategy extends DiscountStrategy {
+//   calculateDiscount(price) {
+//     return price * 0.1; // знижка 10%
+//   }
+// }
+
+// // Стратегія знижки для преміум клієнтів
+// class PremiumDiscountStrategy extends DiscountStrategy {
+//   calculateDiscount(price) {
+//     return price * 0.2; // знижка 20%
+//   }
+// }
+
+// // Стратегія знижки для нових клієнтів
+// class NewCustomeriscountStrategy extends DiscountStrategy {
+//   calculateDiscount(price) {
+//     return price * 0.05; // знижка 5%
+//   }
+// }
+
+// const shoppingCart1 = new ShoppingCart(new RegularDiscountStrategy());
+
+// shoppingCart1.addItem({ name: "Product1", price: 100 });
+// shoppingCart1.addItem({ name: "Product2", price: 50 });
+
+// console.log(shoppingCart1.calculateTotalPrice()); // Виведе: 135
+
+// --------------------------------------------------------------------------
+// Ітератор (Iterator) -- це патерн програмування, який надає спосіб послідовного
+// доступу до елементів колекції без розкриття його внутрішньої стуктури
+//   вик** Коли потрібно отримати доступ до елементів колекції в однаковому
+//         порядку, без залежності від типу або структури цієї колекції
+
+// class User {
+//   constructor(name, email, password) {
+//     this.name = name;
+//     this.email = email;
+//     this.password = password;
+//   }
+// }
+
+// class UserGroup {
+//   users = [];
+
+//   addUser(user) {
+//     this.users.push(user);
+//   }
+// }
+
+// class UserIterator {
+//   #users = null;
+//   #currentIndex = 0;
+//   constructor(userGroup) {
+//     this.#users = userGroup.users;
+//   }
+
+//   #hasNext() {
+//     return this.#currentIndex < this.#users.length;
+//   }
+
+//   //   Метод що повертає наступний елемент
+//   next() {
+//     if (this.#hasNext()) {
+//       const name = this.#users[this.#currentIndex].name;
+//       this.#currentIndex++;
+//       return name;
+//     }
+//     return null;
+//   }
+
+//   list() {
+//     return this.#users.map((user) => user.name).join(", ");
+//   }
+// }
+
+// const group = new UserGroup();
+
+// group.addUser(new User("John Doe", "john@gmail.com", "password1"));
+
+// group.addUser(new User("Jane Smith", "jane@gmail.com", "password2"));
+
+// console.log(group); //Виведе: Масив з двома Юзерами
+
+// const iterator = new UserIterator(group);
+
+// console.log(iterator.next()); //Виведе: John Doe
+// console.log(iterator.next()); //Виведе: Jane Smith
+// console.log(iterator.next()); //Виведе: null
+
+// console.log(iterator.list()) //Виведе: John Doe, Jane Smith
+
+//  -------------------------------------------------------------------------
+// Медіатор (Mediator) -- це патерн програмування, який визначає об'єкт,
+// який інкапсулює взаємодію між групою об'єктів. Медіатор сприяє слабкій
+// залежності між цими об'єктами, дозволяючи спілкуватися через централізовану точку
+
+//   **вик. Коли потрібно реалізувати взаємодію між групою об'єктів з меншою
+//     залежністю між ними та одним централізованим об'єктом-медіатором
+
+// class User {
+//   constructor(name, chat) {
+//     this.name = name;
+//     this.chat = chat;
+//   }
+//   sendMessage(message) {
+//     console.log(`${this.name} відправив повідомлення ${message}`);
+//     return this.chat.sendMessage(this, message);
+//   }
+
+//   //   Прийняття повідомлення від іншого користувача
+//   receiveMessage(user, message) {
+//     console.log(
+//       `${this.name} отримав повідомлення від ${user.name}: ${message}`
+//     );
+//   }
+// }
+
+// class Chat {
+//   constructor() {
+//     this.users = [];
+//   }
+
+//   // Додавання користувача до чату
+//   addUser(user) {
+//     this.users.push(user);
+//   }
+
+//   //   Відправлення повідомлення в чат
+//   sendMessage(sender, message) {
+//     for (const user of this.users) {
+//       if (user !== sender) {
+//         // Відправка повідомлення в message
+//         user.receiveMessage(sender, message);
+//       }
+//     }
+//   }
+// }
+
+// const chatMediator = new Chat();
+
+// const user1 = new User("John", chatMediator);
+// const user2 = new User("Jane", chatMediator);
+// const user3 = new User("Mikel", chatMediator);
+
+// chatMediator.addUser(user1); 
+// chatMediator.addUser(user2);
+// chatMediator.addUser(user3);
+
+// // user1.sendMessage("Привіт, всім!");
+// //Виведе: John відправив повідомлення Привіт, всім!
+// // Jane отримав повідомлення від John: Привіт, всім!
+// // Mikel отримав повідомлення від John: Привіт, всім!
+
+
+// user2.sendMessage("Привіт, John!")
+// //Виведе: Jane відправив повідомлення Привіт, John!
+// // John отримав повідомлення від Jane: Привіт, John!
+// // Mikel отримав повідомлення від Jane: Привіт, John!
