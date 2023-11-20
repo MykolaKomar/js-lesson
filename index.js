@@ -6939,3 +6939,687 @@
 // console.log("Четвертий");
 
 // clearInterval(immediateId)
+
+// =============================================================================================
+// Урок 35
+// Управління асинхронними операціями
+
+// Колбек (callback) -- це функція, яка передається як аргументи іншим функціям і викликається
+// пізніше в контексті виконання цих інших функцій
+
+// Колбек є один із варіантів управління асинхронними операціями
+
+// Колбек функцію можна передати в асинхронну функцію як аргумент та виконати
+// код колбек  функції у відповідь на результат асинхронних операцій
+
+// function loadFile(filename, callback) {
+//   try {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => callback(null, `Вміст файлу ${filename}`), 2000);
+//   } catch (e) {
+//     callback(e);
+//   }
+// }
+// loadFile("example.txt", (error, content) => {
+//   if (error) {
+//     console.error("Помилка завантаження файлу:", error);
+//   } else {
+//     console.log("Файл завантажено успішно!");
+//     console.log("Вміст файлу", content);
+//   }
+// });
+
+// Приклад де колбек погано себе поводить - ПЕКЕЛЬНА ПІРАМІДА----------------------------------------------
+
+// function loadFile(filename, callback) {
+//   try {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => callback(null, `Вміст файлу ${filename}`), 2000);
+//   } catch (e) {
+//     callback(e);
+//   }
+// }
+
+// function convertFile(content, callback) {
+//   setTimeout(function () {
+//     // Конвертація файлу...
+//     callback(null, `Ковертація вміст: ${content.toUpperCase()}`);
+//   }, 1000);
+// }
+
+// function saveFile(convertedContent, callback) {
+//   setTimeout(function () {
+//     // Збереження файлу...
+//     callback();
+//   }, 1500);
+// }
+
+// function sendFileToClient(callback) {
+//   setTimeout(function () {
+//     // Відправка даних  в інтерфейс
+//     callback();
+//   }, 500);
+// }
+
+// // ПЕКЕЛЬНА ПІРАМІДА
+// loadFile("example.txt", (error, content) => {
+//   if (error) {
+//     console.error("Помилка завантаження файлу:", error);
+//   } else {
+//     console.log("Файл завантажено успішно!");
+//     console.log("Вміст файлу", content);
+
+//     convertFile(content, (error, convertedContent) => {
+//       if (error) {
+//         console.error("Помилка конвертації файлу:", error);
+//       } else {
+//         console.log("Файл успішно сконвертовано!");
+//         console.log("Конвертований вміст:", convertedContent);
+
+//         sendFileToClient((error) => {
+//           if (error) {
+//             console.error("Помилка збереження файлу:", error);
+//           } else {
+//             console.log("Файл успішно збережений!");
+
+//             sendFileToClient((error) => {
+//               if (error) {
+//                 console.error("Помилка відправлення файлу клієнту:", error);
+//               } else {
+//                 console.log("Файл успішно відправлений клієнту!");
+//               }
+//             });
+//           }
+//         });
+//       }
+//     });
+//   }
+// });
+
+// --------------------------------------------------------------------------------------------
+// Обіцянка (Promise) -- це конструкція, яка представляє асинхронну операцію,
+// яка буде вирішена (resolved) або відхилена (rejected) у майбутньому
+
+// Вона дозволяє керувати асинхронним кодом, зокрема обробляти результати
+// асинхронних запитів, таймерів, читання, запису файлів та інших асинхронних операцій
+
+// В JavaScript існує об'єкт Promise з вбудованими функціями для роботи з асинхронними операціями
+
+// Для створення обіцянки використовується
+// new Promise (callback)
+
+// Статуси обіцянок
+// Обіцянок
+
+// Обіцянка може пребувати в трьох станах:
+
+//   ** "peding" (очікування): Початковий стан обіцянки, коли вона ще не вирішилась або не відхилена.
+//   ** "resolve" (вирішена): Стан, в якому обіцянка успішно виконалась і повернула результат.
+//   ** "reject" (відхилена): Стан, в якому обіцянка відхилилась і повернулапричину відхилення (помилку)
+
+// const loadFile = (filename) =>
+//   new Promise((resolve) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// const result = loadFile("image.png");
+
+// console.log(result);
+
+// setTimeout(() => console.log(result), 3000);
+
+// ------------------------------------------------------------------------------------------------------------------
+// Обробка результату обіцянки
+// Це вбудована функція, яка оброблює результат обіцянки
+// .then(onResolve, onRejected)
+
+// const loadFile = (filename) =>
+//   new Promise((resolve, reject) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     // reject(`Error`);
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// // Розділення на файли (умовно!!)
+
+// const result = loadFile("image.png");
+
+// result.then(
+//   (data) => {
+//     console.log(data);
+//   },
+//   (error) => {
+//     console.log(error);
+//   }
+// );
+// Виведе: якщо немає reject(`Error`);
+// Завантаження файлу image.png...
+// Вміст файлу image.png
+
+// Виведе: якщо є reject(`Error`);
+//   Завантаження файлу image.png...
+// Error
+
+// Ще варіант без змінної result
+
+// const loadFile = (filename) =>
+//   new Promise((resolve, reject) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// loadFile("image.png")
+//   .then(
+//     (data) => {
+//       return data.toUpperCase();
+//     },
+//     (error) => {
+//       console.log(error);
+//     }
+//   )
+//   .then((data) => {
+//     console.log(data);
+//   });
+// // Виведе:
+// // Завантаження файлу image.png...
+// // ВМІСТ ФАЙЛУ IMAGE.PNG
+
+// --------------------------------------------------------------------------------
+// Обробка помилок обіцянок
+// Це вбудована функція, яка використовується для обробки помилок, що виникають під час
+// виконання обіцянки.
+// .catch(onRejected)
+
+// const loadFile = (filename) =>
+//   new Promise((resolve, reject) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// loadFile("image.png")
+//   .then((data) => {
+//     return data.toUpperCase();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+
+//   .catch((error) => {
+//     console.log("Error", error);
+//   });
+// Виведе:
+// Завантаження файлу image.png...
+// ВМІСТ ФАЙЛУ IMAGE.PNG
+
+// Обробка кінця обіцянки
+// Це вбудована функція, яка виконує певну дію після завершення виконання обіцянки,
+// незалежно від того, чи було виконано обіцянку (resolve), або відхилено (reject).
+// .finally(onFinally)
+
+// const loadFile = (filename) =>
+//   new Promise((resolve, reject) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// loadFile("image.png")
+//   .then((data) => {
+//     return data.toUpperCase();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+
+//   .catch((error) => {
+//     console.log("Error", error);
+//   })
+//   .finally(() => {
+//     console.log(`End`);
+//   });
+// // Виведе:
+// // Завантаження файлу image.png...
+// // ВМІСТ ФАЙЛУ IMAGE.PNG
+// // End
+
+// Зробити так щоб .then виконувались не послідовно а ПАРАЛЕЛЬНО
+
+// const loadFile = (filename) =>
+//   new Promise((resolve, reject) => {
+//     console.log(`Завантаження файлу ${filename}...`);
+//     setTimeout(() => resolve(`Вміст файлу ${filename}`), 2000);
+//   });
+
+// loadFile("image.png")
+//   .then((data) => {
+//     return data.toUpperCase();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   })
+
+//   .catch((error) => {
+//     console.log("Error", error);
+//   })
+//   .finally(() => {
+//     console.log(`End`);
+//   });
+
+// const result = loadFile("photo.jpg");
+
+// result.then((data) => {
+//   console.log(data, 1);
+//   return null;
+// });
+
+// result.then((data) => {
+//   console.log(data, 2);
+//   return null;
+// });
+
+// result.then((data) => {
+//   console.log(data, 3);
+//   return null;
+// });
+// // Виведе:
+// // Завантаження файлу image.png...
+// // Завантаження файлу photo.jpg...
+// // ВМІСТ ФАЙЛУ IMAGE.PNG
+// // End
+// // Вміст файлу photo.jpg 1
+// // Вміст файлу photo.jpg 2
+// // Вміст файлу photo.jpg 3
+
+// Перший приклад уроку переписаний на Promise
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 500);
+//   });
+// }
+
+// loadFile("example.txt")
+//   .then((content) => {
+//     console.log("Файл завантажено успішно!");
+//     console.log("Вміст файлу:", content);
+//     return convertFile(content);
+//   })
+//   .then((convertedContent) => {
+//     console.log("Файл успішно сконвертовано!");
+//     console.log("Ковертований вміст:", convertedContent);
+//     return saveFile(convertedContent);
+//   })
+//   .then(() => {
+//     console.log("Файл успішно збережено!");
+//     return sandFileToClient();
+//   })
+//   .catch((error) => {
+//     console.error("Сталася помилка", error);
+//   })
+//   .finally(() => {
+//     console.log("Файл успішно відправлено клієнту!");
+//   });
+
+// // Виведе:
+// //   Файл завантажено успішно!
+// // Вміст файлу: Вміст файлу example.txt
+// // Файл успішно сконвертовано!
+// // Ковертований вміст: Конвертований вміст: ВМІСТ ФАЙЛУ EXAMPLE.TXT
+// // Файл успішно збережено!
+// // Файл успішно відправлено клієнту!
+
+// -------------------------------------------------------------------------------
+// Вирішена обіцянка
+// Це вбудована функція, яка створює об'єкт Promise з вирішеним (resolved) станом
+// і, за потреби, повертає значення або об'єкт вже вирішеного Promise
+// Promise.resolve(value)
+
+// -------------------------------------------------------------------------------
+// Відхилення обіцянок
+// Це вбудована функція, яка створює відхилений об'єкт Promise з вказаною
+// причиною (значенням)
+// Promise.reject(reason)
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 500);
+//   });
+// }
+// // вирішена обіцянка
+// function getInfoFromFile(file) {
+//   console.log(file, 1111);;
+
+//   return Promise.resolve(file);
+// }
+
+// loadFile("example.txt")
+//   .then((content) => {
+//     console.log("Файл завантажено успішно!");
+//     console.log("Вміст файлу:", content);
+//     return convertFile(content);
+//   })
+//   .then((data) => {
+
+//     return getInfoFromFile(data);
+//   })
+//   .then((convertedContent) => {
+//     console.log("Файл успішно сконвертовано!");
+//     console.log("Ковертований вміст:", convertedContent);
+//     return saveFile(convertedContent);
+//   })
+//   .then(() => {
+//     console.log("Файл успішно збережено!");
+//     return sandFileToClient();
+//   })
+//   .catch((error) => {
+//     console.error("Сталася помилка", error);
+//   })
+//   .finally(() => {
+//     console.log("Файл успішно відправлено клієнту!");
+//   });
+
+// // Виведе:
+// // Файл завантажено успішно!
+// // Вміст файлу: Вміст файлу example.txt
+// // Конвертований вміст: ВМІСТ ФАЙЛУ EXAMPLE.TXT 1111
+// // Файл успішно сконвертовано!
+// // Ковертований вміст: Конвертований вміст: ВМІСТ ФАЙЛУ EXAMPLE.TXT
+// // Файл успішно збережено!
+// // Файл успішно відправлено клієнту!
+
+// ----------------------------------------------------------------------------
+// Об'єднання обіцянок
+// Це вбудована функція, яка об'єднує список обіцянок в одну
+// Pormise.all(iterable)
+//  **iterable - Масив або інший ітерабельний об'єкт, що містить обіцянки
+// Якщо всі обіцянки успішно виконуються, Pormise.all повертає масив з результатами
+// в тому ж порядку, в якому були передані вхідні обіцянки. Якщо ж хоча б одна обіцянка
+// відхиляється (видає помилку), то повернута обіцянка відхиляється із цією помилкою
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 500);
+//   });
+// }
+// // вирішена обіцянка
+// function getInfoFromFile(file) {
+//   console.log(file, 1111);
+
+//   return Promise.resolve(file);
+// }
+
+// Promise.all([
+//   loadFile("example.txt"),
+//   getInfoFromFile("example.txt"),
+//   saveFile(),
+//   sandFileToClient(),
+//   convertFile("file"),
+// ]).then((data) => {
+//   console.log(data);
+// });
+// // Виведе:
+// // example.txt 1111
+// // [
+// //   'Вміст файлу example.txt',
+// //   'example.txt',
+// //   undefined,
+// //   undefined,
+// //   'Конвертований вміст: FILE'
+// // ]
+
+// --------------------------------------------------------------------------------
+// Об'єднання обіцянок
+// Це вбудована функція, яка об'єднує список обіцянок в одну
+// Вона є аналогом Promise.all(iterable), але повертає результати всіх обіцянок
+// незалежно від їхнього статусу ,включаючи як успішно вирішені, так і відхилені,
+// в той час Promise.all() зупиняє виконання, якщо одна з обіцянок відхиляється
+// Promise.allSettled(iterable)
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("Error");
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 500);
+//   });
+// }
+// // вирішена обіцянка
+// function getInfoFromFile(file) {
+//   console.log(file, 1111);
+
+//   return Promise.resolve(file);
+// }
+
+// Promise.allSettled([
+//   loadFile("example.txt"),
+//   getInfoFromFile("example.txt"),
+//   saveFile(),
+//   sandFileToClient(),
+//   convertFile("file"),
+// ]).then((data) => {
+//   console.log(data);
+// });
+// // Виведе:
+// // example.txt 1111
+// // [
+// //   { status: 'fulfilled', value: 'Вміст файлу example.txt' },
+// //   { status: 'fulfilled', value: 'example.txt' },
+// //   { status: 'rejected', reason: 'Error' },
+// //   { status: 'fulfilled', value: undefined },
+// //   { status: 'fulfilled', value: 'Конвертований вміст: FILE' }
+// // ]
+
+// -------------------------------------------------------------------------------
+// Будь-яка обіцянка
+// Це вбудована функція, яка об'єднує список обіцянок в одну та повертає
+// результат виконання успішної обіцянки
+// Promise.any(itarable)
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("Error");
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, 500);
+//   });
+// }
+// // вирішена обіцянка
+// function getInfoFromFile(file) {
+//   console.log(file, 1111);
+
+//   return Promise.resolve(file);
+// }
+
+// Promise.any([
+//   loadFile("example.txt"),
+//   getInfoFromFile("example.txt"),
+//   saveFile(),
+//   sandFileToClient(),
+//   convertFile("file"),
+// ]).then((data) => {
+//   console.log(data);
+// });
+// // Виведе:
+// // example.txt 1111
+// // example.txt
+
+// --------------------------------------------------------------------------
+// Змагання обіцянок
+// Це вбудована функція, яка об'єднує список обіцянок в одну та повертає
+// результат виконання першої успішної або неуспішної обіцянки
+// Promise.race(iterable)
+
+// function loadFile(filename) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Вміст файлу ${filename}`);
+//     }, 2000);
+//   });
+// }
+
+// function convertFile(content) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+//     }, 1000);
+//   });
+// }
+
+// function saveFile(convertedContent) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("Error");
+//     }, 1500);
+//   });
+// }
+
+// function sandFileToClient() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject("Error");
+//     }, 500);
+//   });
+// }
+// // вирішена обіцянка
+// function getInfoFromFile(file) {
+//   // console.log(file, 1111);
+
+//   return Promise.resolve(file);
+// }
+
+// Promise.race([
+//   loadFile("example.txt"),
+//   getInfoFromFile("example.txt"),
+//   saveFile(),
+//   sandFileToClient(),
+//   convertFile("file"),
+// ]).then((data) => {
+//   console.log(data);
+// });
+// // Виведе:
+// // example.txt
