@@ -7865,3 +7865,384 @@
 //             діапазону 200-299
 
 // * type (лише для читання) -- Це вбудована властивість, яка містить тип відповіді
+
+// =====================================================================================
+// Урок 37
+// Функції-генератори
+
+// Функція-генератор -- це особливий тип функції, який може призупиняти своє виконання,
+// повертаючи проміжний результат
+
+// Функція-генератор дозволяє створювати ітератори
+
+// Коли ви викликаєте функцію-генератор, вона повертає спеціальний об'єкт-ітератор.
+// Цей об'єкт використовується для управління процесом виконання функції-генератора.
+
+// Для створення використовуйте ключове слово
+// function*
+
+// function* myGenerator() {}
+
+// ---------------------------------------------------------------------------------------
+// Ключове слово "віддати" (yield) -- це ключове слово, яке використовується у функціях-
+// генераторах для призупинення виконання та повернення значень
+
+// function* myGenerator() {
+//   console.log("Start");
+//   yield 1;
+//   console.log("Start 2");
+//   yield 2;
+//   console.log("Start 3");
+//   yield 3;
+
+//   console.log("End");
+// }
+
+// const generator = myGenerator();
+
+// const result1 = generator.next();
+// // console.log(generator); //Виведе: Object [Generator] {}
+// // console.log(generator.value); //Виведе: undefined
+// // console.log(generator.done); //Виведе: undefined
+// console.log(result1);
+// //Виведе:
+// // Start
+// // { value: 1, done: false }
+
+// const result2 = generator.next();
+// console.log(result2);
+// //Виведе:
+// // Start
+// // { value: 1, done: false }
+// // Start 2
+// // { value: 2, done: false }
+
+// const result3 = generator.next();
+// console.log(result3);
+// //Виведе:
+// // Start;
+// // { value: 1, done: false }
+// // Start 2
+// // { value: 2, done: false }
+// // Start 3
+// // { value: 3, done: false }
+
+// const result4 = generator.next();
+// console.log(result4);
+// //Виведе:
+// // Start
+// // { value: 1, done: false }
+// // Start 2
+// // { value: 2, done: false }
+// // Start 3
+// // { value: 3, done: false }
+// // End
+// // { value: undefined, done: true }
+
+// // Якщо в кінці задати значення для return воно поверно його в value
+
+// Приклад - -- -- - - --- - - - - - - - - - - - - -- - - - - - - - - - - -
+
+// function* processOrder(order) {
+//   yield validateOrder(order);
+//   yield processPayment(order);
+//   yield sendOrderConfirmation(order);
+
+//   return order;
+// }
+
+// function getOrderDetails() {
+//   const order = { id: 123, product: "Товар", quantity: 2 };
+//   return order;
+// }
+
+// function validateOrder(order) {
+//   const isValid = order.quantity > 0;
+//   return isValid;
+// }
+
+// function processPayment(order) {
+//   const isPaymentSuccessful = Math.random() < 0.5;
+//   return isPaymentSuccessful;
+// }
+
+// function sendOrderConfirmation() {
+//   const isConfirmationSent = true;
+//   return isConfirmationSent;
+// }
+
+// const order = { id: 123, product: "Товар", quantity: 2 };
+
+// const orderProcessing = processOrder(order);
+
+// console.log(orderProcessing.next());
+// console.log(orderProcessing.next());
+// console.log(orderProcessing.next());
+// console.log(orderProcessing.next());
+
+// // Виведе:
+// // { value: true, done: false }
+// // { value: true, done: false }
+// // { value: true, done: false }
+// // { value: { id: 123, product: 'Товар', quantity: 2 }, done: true }
+
+// // 1 Певні особливості функцій-генераторів
+
+// function* generatorFunction() {
+//   yield "First value";
+//   yield "Second value";
+// }
+
+// const generator = generatorFunction();
+
+// for (let value of generator) {
+//   console.log(value);
+// }
+// // Вивде:
+// // First value
+// // Second value
+
+// // 2 Певні особливості функцій-генераторів
+
+// function* generatorOne() {
+//   yield "1 1";
+//   yield "1 2";
+// }
+
+// function* generatorTwo() {
+//   yield* generatorOne();
+//   yield "2 1";
+//   yield "2 2";
+// }
+
+// const generator = generatorTwo();
+
+// console.log(generator.next());
+// console.log(generator.next());
+// console.log(generator.next());
+// console.log(generator.next());
+// // Вивде:
+// // { value: '1 1', done: false }
+// // { value: '1 2', done: false }
+// // { value: '2 1', done: false }
+// // { value: '2 2', done: false }
+
+// // yield* об'єднує вказаний генератор з тим в якому це прописати
+
+// ---------------------------------------------------------------------------
+// Передача даних в генератор
+// Ключове слово yield не лише повертає значення назовні, але може
+// передавати значення всередину генератора.
+
+// Потрібно значення передавати в аргумент
+// next(value)
+
+// function* myGenerator() {
+//   yield 1;
+//   const value = yield 2;
+//   yield 3;
+//   yield value;
+// }
+
+// const generator = myGenerator();
+
+// console.log(generator.next().value);
+// console.log(generator.next().value);
+// console.log(generator.next(4).value);
+// console.log(generator.next().value);
+
+// // Виведе:
+// // 1
+// // 2
+// // 3
+// // 4
+
+// ------------------------------------------------------------------------------
+// Завершення функцыъ-генераторатора
+// Функцію-генератор можна достроково завершити, викликавши відповідний метод,
+// який негайно припиняє роботу генератора, всі незавершені yield інструкції
+// ігноруються
+// return(value)
+
+// function* myGenerator() {
+//   yield 1;
+//   const value = yield 2;
+//   yield 3;
+//   yield value;
+// }
+
+// const generator = myGenerator();
+
+// console.log(generator.next().value);
+
+// console.log(generator.return(10));
+
+// console.log(generator.next().value);
+// console.log(generator.next(4).value);
+// console.log(generator.next().value);
+
+// // Виведе:
+// // 1
+// // { value: 10, done: true }
+// // undefined
+// // undefined
+// // undefined
+
+// -----------------------------------------------------------------------------------------
+// Виклик помилки в функції-генераторі
+// Функцію-генератор можна змусити викликавши помилку, визвавши відповідний метод,
+// який приймає значення посилки
+
+// thow(error)  -- викликає помилку в коді функції-генератора.
+// Значення, яке передали як аргумент, можна обробити в генераторі за допомогою try...catch
+
+// Якщо помилка виникає функції-генераторі та відновлюється в блок catch, генератор
+// не викликає помилку, а шукати наступний yield всередині блоку catch або після блоку catch
+
+// function* myGenerator() {
+//   try {
+//     yield 1;
+//     const value = yield 2;
+//     yield 3;
+//     yield value;
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
+
+// const generator = myGenerator();
+
+// console.log(generator.next().value);
+
+// console.log(generator.throw(new Error()));
+
+// console.log(generator.next().value);
+// console.log(generator.next(4).value);
+// console.log(generator.next().value);
+
+// // Виведе:
+// // 1
+// // Error
+// //     at Object.<anonymous> (D:\Mykola\ALL\Courses IT BRAINS\work\js\index.js:8117:29)
+// //     at Module._compile (node:internal/modules/cjs/loader:1254:14)
+// //     at Module._extensions..js (node:internal/modules/cjs/loader:1308:10)
+// //     at Module.load (node:internal/modules/cjs/loader:1117:32)
+// //     at Module._load (node:internal/modules/cjs/loader:958:12)
+// //     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+// //     at node:internal/main/run_main_module:23:47
+// // { value: undefined, done: true }
+// // undefined
+// // undefined
+// // undefined
+
+// ----------------------------------------------------------------------------------------------
+// Перебір асинхронних значень генератора
+// Для перебору асинхронного генератора через for
+// Потрібно вказати for await (const значення of генератор) {...}
+
+// Генератори можна використовувавти разом з асинхронним кодом
+// за допомогою ключових слів async та await
+
+// const asyncFunc = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+// async function* asyncGenerator() {
+//   await asyncFunc();
+//   yield "After 1 second";
+//   await asyncFunc();
+//   yield "After 2 second";
+// }
+
+// // async function runGenerator() {
+// //   const generator = asyncGenerator();
+
+// //   let result = null;
+
+// //   result = await generator.next();
+
+// //   console.log(result);
+
+// //   result = await generator.next();
+
+// //   result.value;
+
+// //   console.log(result);
+// // }
+// // runGenerator();
+// // // Виведе:
+// // // After 1 second
+// // // After 2 second
+
+// // Ітерація через цик for
+
+// async function runGenerator() {
+//   const generator = asyncGenerator();
+
+//   for await (const result of generator) {
+//     console.log(result);
+
+//     await asyncFunc();
+//   }
+// }
+// runGenerator();
+// // Виведе:
+// // After 1 second
+// // After 2 second
+
+// --------------------------------------------------------------------------------
+// ПРИКЛАД - - - - - - - - - - - - - - - - - - - -- -- -- - - - - - - - - - -- - - -
+
+// // Функція, яка симулює завантаження даних з сервера
+// function fetchDataFromServer() {
+//   return new Promise((resolve, reject) => {
+//     // симулюємо асинхронний запит до сервера
+//     setTimeout(() => {
+//       const randomNumber = Math.random();
+//       if (randomNumber < 0.7) {
+//         resolve("Дані успішно завантажені");
+//       } else {
+//         reject("Помилка завантаження даних");
+//       }
+//     }, 1000);
+//   });
+// }
+
+// // Функція для конвертації даних
+// function convertData(data) {
+//   return new Promise((resolve) => {
+//     // Симолюємо асинхрону конвертацію даних
+//     setTimeout(() => {
+//       const convertedData = data.toUpperCase(); // Приклад конвертації
+//       resolve(convertedData);
+//     }, 500);
+//   });
+// }
+
+// // Генераторний метод, що використовує `yield` для послідовного завантаження даних з сервера
+// async function* fetchData() {
+//   try {
+//     const result = await fetchDataFromServer(); // Завантажуємо дані з сервера
+//     yield "pending"; // Повертаємо статус 'pending'
+
+//     const convertedData = await convertData(result); // Конвертуємо дані
+//     yield "success"; // повертаємо статус 'success'
+
+//     return convertedData; // Повертаємо конвертовані дані
+//   } catch (error) {
+//     yield "error"; // Повертаємо статус "error"
+//   }
+// }
+
+// (async () => {
+//   const generator = fetchData();
+
+//   console.log(await generator.next());
+
+//   console.log(await generator.next());
+
+//   console.log(await generator.next());
+// })();
+
+// // Виведе: 
+// // { value: 'pending', done: false }
+// // { value: 'success', done: false }
+// // { value: 'ДАНІ УСПІШНО ЗАВАНТАЖЕНІ', done: true }
